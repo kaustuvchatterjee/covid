@@ -77,7 +77,8 @@ fig1 = px.scatter(sdf, x="population", y="dpm",
                      labels={"gr": "Growth Rate(%)", "population": "Population",
                              "dpm": "Deaths/million", "prev": "Prevalence(%)"},
                      hover_name=sdf["state"],
-                     color_continuous_scale='RdYlGn_r')
+                     color_continuous_scale='RdYlGn_r',
+                     width=1000, height=600)
 
 fig1.update_layout( xaxis_title='Population',
                     yaxis_title='Deaths per million',
@@ -107,8 +108,13 @@ fig1.update(layout_coloraxis_showscale=True)
 fig1.update_traces(marker=dict(line=dict(width=1, color='DarkSlateGrey')))
 
 #Prepare GIS data
-filename = '/run/media/kaustuv/Data/Python/Notebooks/covid/maps/s2.shp'
-geo_df = gpd.read_file(filename).to_crs("EPSG:4326")
+@stl.cache(allow_output_mutation=True)
+def load_geodata():
+    filename = 'maps/s2.shp'
+    geo_df = gpd.read_file(filename).to_crs("EPSG:4326")
+    return geo_df
+    
+geo_df = load_geodata()
 
 dpm = []
 gr=[]
@@ -148,7 +154,8 @@ fig2 = px.choropleth(geo_df, geojson=geo_df.geometry,
                     range_color=[0, max_col],
                     hover_data=['dpm','gr','prev'],
                     labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)',
-                             'prev': 'Est Prevalence(%)', 'ST_NM': 'State'}
+                             'prev': 'Est Prevalence(%)', 'ST_NM': 'State'},
+                    width=1000, height=600
                    )
 fig2.update_geos(fitbounds="locations", visible=False)
 fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -176,7 +183,8 @@ fig3 = px.choropleth(geo_df, geojson=geo_df.geometry,
         range_color=[0, 3],
         hover_data=['dpm','gr','prev'],
         labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)',
-                 'prev': 'Est Prevalence(%)', 'ST_NM': 'State'}
+                 'prev': 'Est Prevalence(%)', 'ST_NM': 'State'},
+        width=1000, height=600
            )
 fig3.update_geos(fitbounds="locations", visible=False)
 fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -205,7 +213,8 @@ fig4 = px.choropleth(geo_df, geojson=geo_df.geometry,
                     range_color=[0, 100],
                     hover_data=['dpm','gr','prev'],
                     labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)',
-                             'prev': 'Est Prevalence(%)', 'ST_NM': 'State'}
+                             'prev': 'Est Prevalence(%)', 'ST_NM': 'State'},
+                    width=1000, height=600
                    )
 fig4.update_geos(fitbounds="locations", visible=False)
 fig4.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -230,7 +239,7 @@ fig4.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "
 '''
 ## States - Mortality vs Population
 '''
-stl.plotly_chart(fig1,use_container_width=True)
+stl.plotly_chart(fig1)
 '''
 ## States - Mortality
 '''
@@ -240,3 +249,7 @@ stl.plotly_chart(fig2)
 ## States - Growth Rate
 '''
 stl.plotly_chart(fig3)
+'''
+## States - Estimated Prevalence
+'''
+stl.plotly_chart(fig4)

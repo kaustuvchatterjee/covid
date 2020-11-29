@@ -18,7 +18,7 @@ import numpy as np
 def load_data():
     url = 'https://api.covid19india.org/csv/latest/districts.csv'
     data = pd.read_csv(url)
-    popdata = pd.read_csv('https://github.com/kaustuvchatterjee/covid/distpop.csv')
+    popdata = pd.read_csv('distpop.csv')
     return data, popdata
 
 
@@ -77,9 +77,9 @@ sdf['censuscode'] = sdf['censuscode'].astype(int, errors='ignore')
 @stl.cache(allow_output_mutation=True)
 def load_geodata():
     #path = '/run/media/kaustuv/Data/Python/Notebooks/covid/maps/'
-    path = 'https://github.com/kaustuvchatterjee/covid/maps/'
+    #path = 'https://github.com/kaustuvchatterjee/covid/blob/master/maps/'
     # path = '/run/media/kaustuv/Data/Python/Notebooks/'
-    filename = path+'d1.shp'
+    filename = 'maps/d1.shp'
     geo_df = gpd.read_file(filename).to_crs("EPSG:4326")
     return geo_df
 
@@ -123,7 +123,8 @@ fig1 = px.choropleth(geo_df, geojson=geo_df.geometry,
                     color_continuous_scale= 'RdYlGn_r',  #  color scale red, yellow green
                     range_color=[0, max_col],
                     hover_data=['dpm','gr'],
-                    labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)'}
+                    labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)'},
+                    width=1000, height=600
                    )
 fig1.update_geos(fitbounds="locations", visible=False)
 fig1.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -153,7 +154,8 @@ fig2 = px.choropleth(geo_df, geojson=geo_df.geometry,
                     color_continuous_scale= 'RdYlGn_r',  #  color scale red, yellow green
                     range_color=[0, 3],
                     hover_data=['dpm','gr'],
-                    labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)'}
+                    labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)'},
+                    width=1000, height=600
                    )
 fig2.update_geos(fitbounds="locations", visible=False)
 fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -184,7 +186,8 @@ fig3 = px.choropleth(geo_df, geojson=geo_df.geometry,
                     color_continuous_scale= 'RdYlGn',  #  color scale red, yellow green
                     range_color=[0, 100],
                     hover_data=['dpm','gr','prev'],
-                    labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)','prev': 'Est Prevalence(%)'}
+                    labels={'dpm': 'Deaths/million','gr':'Growth Rate(%)','prev': 'Est Prevalence(%)'},
+                    width=1000, height=600
                    )
 fig3.update_geos(fitbounds="locations", visible=False)
 fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
@@ -220,7 +223,8 @@ fig4 = px.scatter(sdf, x="population", y="dpm",
                  title='Covid-19 District-wise Mortality Rate',
                  color_continuous_scale='RdYlGn_r',
                  log_x=True,
-                  opacity=.7
+                  opacity=.7,
+                  width=1000, height=600
                  )
 
 fig4.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},

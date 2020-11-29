@@ -54,7 +54,8 @@ fig1 = px.scatter(stats_df, x="population", y="dpm",
                      size="dpm",
                      labels={"gr": "Growth Rate(%)", "population": "Population", "dpm": "Deaths/million"},
                      hover_name=stats_df["country"],
-                     color_continuous_scale='RDYlGn_r')
+                     color_continuous_scale='RDYlGn_r',
+                     width=1200, height=600)
 
 fig1.update_layout( xaxis_title='Population',
                     yaxis_title='Deaths per million',
@@ -92,7 +93,8 @@ fig2 = px.choropleth(data_frame = stats_df,
                     color_continuous_scale= 'RdYlGn_r',  #  color scale red, yellow green
                     range_color=[0, 1000],
                     hover_data=["dpm", "gr"],
-                    labels={'dpm':'Death/million', 'gr':'Growth Rate(%)'})
+                    labels={'dpm':'Death/million', 'gr':'Growth Rate(%)'},
+                    width=1200, height=600)
 
 fig2.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                    title_text = 'Covid-19 - Deaths per Million Population',
@@ -118,7 +120,8 @@ fig3 = px.choropleth(data_frame = stats_df,
                     color_continuous_scale= 'RdYlGn_r',  #  color scale red, yellow green
                     range_color=[0, 3],
                     hover_data=['dpm','gr'],
-                    labels={'dpm':'Deaths/million', 'gr':'Growth Rate(%)'}
+                    labels={'dpm':'Deaths/million', 'gr':'Growth Rate(%)'},
+                    width=1200, height=600
                     )
 
 # fig.update_layout(title_text = 'Covid-19 - Current Growth Rate')
