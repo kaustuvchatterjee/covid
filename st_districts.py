@@ -18,10 +18,11 @@ import numpy as np
 def load_data():
     url = 'https://api.covid19india.org/csv/latest/districts.csv'
     data = pd.read_csv(url)
-    return data
+    popdata = pd.read_csv('https://github.com/kaustuvchatterjee/covid/distpop.csv')
+    return data, popdata
 
 
-data = load_data()
+data, popdata = load_data()
 cdata = data
 cdata = cdata.drop(columns=["Other","Tested"])
 idx = cdata[(cdata["District"]=="Unknown") | (cdata["District"]=="Others") | 
@@ -34,7 +35,7 @@ idx = cdata[(cdata["District"]=="Unknown") | (cdata["District"]=="Others") |
            (cdata["District"]=="Evacuees")].index
 cdata.drop(idx, inplace = True)
 
-popdata = pd.read_csv('distpop.csv')
+
 sdf = pd.DataFrame(columns = ["state","district","total_deaths","growth_rate","dpm",'prev',"population","censuscode"])
 udf = cdata.groupby(["State","District"]).size().reset_index()
 
@@ -75,7 +76,8 @@ sdf['censuscode'] = sdf['censuscode'].astype(int, errors='ignore')
 
 @stl.cache(allow_output_mutation=True)
 def load_geodata():
-    path = '/run/media/kaustuv/Data/Python/Notebooks/covid/maps/'
+    #path = '/run/media/kaustuv/Data/Python/Notebooks/covid/maps/'
+    path = 'https://github.com/kaustuvchatterjee/covid/maps/'
     # path = '/run/media/kaustuv/Data/Python/Notebooks/'
     filename = path+'d1.shp'
     geo_df = gpd.read_file(filename).to_crs("EPSG:4326")
