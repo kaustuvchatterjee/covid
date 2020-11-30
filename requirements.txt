@@ -1,0 +1,5 @@
+pandas==0.25.3
+geopandas==0.8.1
+numpy==1.18.4
+scipy==1.4.1
+plotly==4.10.0
