@@ -9,6 +9,7 @@ Created on Sun Nov 29 13:27:59 2020
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Read data from eCDC website
 @st.cache
@@ -46,6 +47,41 @@ for geoId in cntry_id:
 
 stats_df = stats_df.dropna()
 
+time_df = stats_df.sort_values(['dpm'],ascending=False)
+time_df = time_df.head(20)
+isos = time_df["iso"].unique()
+fig = go.Figure()
+for iso in isos:
+    cdata = data[data["countryterritoryCode"]==iso]
+    cdata['cumdeaths'] = cdata['deaths'].cumsum()
+    cdata['dpm'] = round(cdata['cumdeaths']*1e6/cdata['popData2019'],2)
+    
+    fig.add_trace(go.Scatter(x=cdata['dateRep'],y=cdata['dpm'], mode="lines", name=iso))
+
+fig.update_layout( xaxis_title='Date',
+                    yaxis_title='Deaths per million',
+                    margin=dict(r=20, b=10, l=10, t=10),
+                    title={
+                        "text": "Covid-19 - Mortality over Time",
+                        "x": 0.5,
+                        "y": 0.95,
+                        "xanchor": "center",
+                        "yanchor": "top"
+                    },
+                    autosize=False, width=1000, height=600,
+                    annotations=[
+                        dict(
+                            x=0.97,
+                            y=0.03,
+                            xref="paper",
+                            yref="paper",
+                            text="Kaustuv",
+                            ax=0,
+                            ay=0
+                            )
+                        ]
+                    )
+                            
 #World deaths per million scatter plot
 fig1 = px.scatter(stats_df, x="population", y="dpm",
                      log_x=True,
@@ -55,7 +91,7 @@ fig1 = px.scatter(stats_df, x="population", y="dpm",
                      labels={"gr": "Growth Rate(%)", "population": "Population", "dpm": "Deaths/million"},
                      hover_name=stats_df["country"],
                      color_continuous_scale='RDYlGn_r',
-                     width=1200, height=600)
+                     width=1000, height=600)
 
 fig1.update_layout( xaxis_title='Population',
                     yaxis_title='Deaths per million',
@@ -94,7 +130,7 @@ fig2 = px.choropleth(data_frame = stats_df,
                     range_color=[0, 1000],
                     hover_data=["dpm", "gr"],
                     labels={'dpm':'Death/million', 'gr':'Growth Rate(%)'},
-                    width=1200, height=600)
+                    width=1000, height=600)
 
 fig2.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                    title_text = 'Covid-19 - Deaths per Million Population',
@@ -121,7 +157,7 @@ fig3 = px.choropleth(data_frame = stats_df,
                     range_color=[0, 3],
                     hover_data=['dpm','gr'],
                     labels={'dpm':'Deaths/million', 'gr':'Growth Rate(%)'},
-                    width=1200, height=600
+                    width=1000, height=600
                     )
 
 # fig.update_layout(title_text = 'Covid-19 - Current Growth Rate')
@@ -152,6 +188,10 @@ st.plotly_chart(fig1)
 st.plotly_chart(fig2)
 
 '''
-Growth Rate
+## Growth Rate
 '''
 st.plotly_chart(fig3)
+'''
+## Mortality over Time (Top 20 Countries)
+'''
+st.plotly_chart(fig)
