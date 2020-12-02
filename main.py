@@ -15,10 +15,24 @@ from states import create_statefigs
 from districts import create_distfigs
 from india import create_indfigs
 from indiapred import india_pred
+from mumbai import create_mumfigs
 
 #Streamlit Code
 #st.title('Covid - 19 in Charts')
-domain = ['World','India','India - States','India - Districts','India - Prediction']
+#---------------------------------
+st.markdown(
+    f'''
+        <style>
+            .sidebar .sidebar-content {{
+                width: 340px;
+            }}
+        </style>
+    ''',
+    unsafe_allow_html=True
+)
+#-----------------------------------
+
+domain = ['World','India','India - States','India - Districts','India - Prediction','Mumbai']
 domain_opt = st.sidebar.selectbox('Select Domain:',domain)
 
 
@@ -130,3 +144,10 @@ if domain_opt == domain[4]:
     Prediction based on average of estimated parameters of last 3 weeks.
     '''
     st.plotly_chart(pfig1)
+
+if domain_opt == domain[4]:
+    '''
+    Mumbai
+    '''
+    mfig0 = create_mumfigs()
+    st.plotly_chart(mfig0)
