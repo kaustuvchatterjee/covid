@@ -11,26 +11,30 @@ import plotly.express as px
 import streamlit as st
 from scipy.signal import savgol_filter
 
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_data():
     url = 'https://api.covid19india.org/csv/latest/districts.csv'
     data = pd.read_csv(url)
-    cdata = data[data['District']=='Mumbai']
-    cdata['Daily Cases']=cdata['Confirmed'].diff()
-    cdata = cdata[1:]
-    cdata.reset_index(inplace=True)
-    n = np.arange(0,len(cdata['Daily Cases']),1)
-    
-    for i in n:
-        if cdata['Daily Cases'].iloc[i]<=0:
-            cdata['Daily Cases'][i]=(cdata['Daily Cases'].iloc[i-1]+cdata['Daily Cases'].iloc[i+1])/2
-    
-    raw = cdata['Daily Cases'].values.tolist()
-    smooth = savgol_filter(raw,15,1)
-    cdata['Smoothened']=smooth
-    return cdata
+    return data
 
-cdata = load_data()
+data = load_data()
+
+
+cdata = data[data['District']=='Mumbai']
+cdata['Daily Cases']=cdata['Confirmed'].diff()
+cdata = cdata[1:]
+cdata.reset_index(inplace=True)
+n = np.arange(0,len(cdata['Daily Cases'])-1,1)
+
+for i in n:
+    if cdata['Daily Cases'].iloc[i]<=0 & i<len(cdata['Daily Cases'])-1:
+        cdata['Daily Cases'][i]=(cdata['Daily Cases'].iloc[i-1]+cdata['Daily Cases'].iloc[i+1])/2
+
+raw = cdata['Daily Cases'].values.tolist()
+smooth = savgol_filter(raw,15,1)
+cdata['Smoothened']=smooth
+    
+
 
 @st.cache()
 def create_mumfigs():

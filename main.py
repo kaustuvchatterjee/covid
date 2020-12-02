@@ -145,9 +145,9 @@ if domain_opt == domain[4]:
     '''
     st.plotly_chart(pfig1)
 
-if domain_opt == domain[4]:
+if domain_opt == domain[5]:
     '''
-    Mumbai
+    ## Mumbai
     '''
     mfig0 = create_mumfigs()
     st.plotly_chart(mfig0)
