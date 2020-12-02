@@ -1,0 +1,132 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Dec  1 10:54:49 2020
+
+@author: kaustuv
+"""
+# Import Libraries
+
+import streamlit as st
+
+# Import Files
+from world import create_worldfigs
+from states import create_statefigs
+from districts import create_distfigs
+from india import create_indfigs
+from indiapred import india_pred
+
+#Streamlit Code
+#st.title('Covid - 19 in Charts')
+domain = ['World','India','India - States','India - Districts','India - Prediction']
+domain_opt = st.sidebar.selectbox('Select Domain:',domain)
+
+
+if domain_opt == domain[0]:
+
+    wfig0, wfig1, wfig2 = create_worldfigs()
+    
+    choices = ['Population v/s Deaths per Million',
+               'Map - Deaths per Million',
+               'Map - Growth Rate']
+    
+    '''
+    ## World
+    '''
+    
+    option = st.sidebar.selectbox('Select Chart:',choices)
+    if option == choices[0]:
+        st.plotly_chart(wfig0)
+        st.text('Hover on data points to see additional data')
+    if option == choices[1]:
+        st.plotly_chart(wfig1)
+        st.text('Hover on countries to see additional data')
+    if option == choices[2]:
+        st.plotly_chart(wfig2)
+        st.text('Hover on countries to see additional data')
+
+if domain_opt == domain[1]:
+    '''
+    # India
+    '''
+    ifig0, ifig1 = create_indfigs()
+    
+    choices = ['Cases & Deaths',
+               'Morbidity & Mortality Rates']
+    
+    option = st.sidebar.selectbox('Select Chart:',choices)
+    if option == choices[0]:
+        st.plotly_chart(ifig0)
+    if option == choices[1]:
+        st.plotly_chart(ifig1)
+
+if domain_opt==domain[2]:
+    '''
+    ## India - States
+    '''
+    sfig0, sfig1, sfig2, sfig3, sfig4 = create_statefigs()
+    
+    choices = ['Population v/s Deaths per Million',
+               'Estimated Prevalence',
+               'Map - Deaths per Million',
+               'Map - Growth Rate',
+               'Map - Estimated Prevalence',]
+    
+    option = st.sidebar.selectbox('Select Chart:',choices)
+    if option == choices[0]:
+        st.plotly_chart(sfig0)
+        st.text('Hover on data points to see additional data')
+    if option == choices[1]:
+        st.plotly_chart(sfig1)
+        st.text('Hover on data points to see additional data')
+    if option == choices[2]:
+        st.plotly_chart(sfig2)
+        st.text('Hover on states to see additional data')
+    if option == choices[3]:
+        st.plotly_chart(sfig3)
+        st.text('Hover on states to see additional data')
+    if option == choices[4]:
+        st.plotly_chart(sfig4)
+        st.text('Hover on states points to see additional data')
+        
+        
+if domain_opt == domain[3]:
+    '''
+    ## India - Districts
+    '''
+    dfig0, dfig1, dfig2, dfig3, dfig4 = create_distfigs()
+    
+    choices = ['District-wise Total Deaths',
+               'Deaths per Million',
+               'Map - Deaths per Million',
+               'Map - Growth Rate',
+               'Map - Estimated Prevalence',]
+    
+    option = st.sidebar.selectbox('Select Chart:',choices)
+    if option == choices[0]:
+        st.plotly_chart(dfig3)
+        st.text('Hover on data points to see additional data')
+    if option == choices[1]:
+        st.plotly_chart(dfig4)
+        st.text('Hover on data points to see additional data')
+    if option == choices[2]:
+        st.plotly_chart(dfig0)
+        st.text('Hover on districts to see additional data')
+    if option == choices[3]:
+        st.plotly_chart(dfig1)
+        st.text('Hover on districts to see additional data')
+    if option == choices[4]:
+        st.plotly_chart(dfig2)
+        st.text('Hover on districts to see additional data')
+        
+if domain_opt == domain[4]:
+    r'''
+    ## India - Prediction
+    Model based on SIR model with $$\beta$$ & $$\gamma$$ estimated piecewise over 7-day sliding window.
+    '''
+    pfig0, pfig1 = india_pred()
+    st.plotly_chart(pfig0)
+    '''
+    Prediction based on average of estimated parameters of last 3 weeks.
+    '''
+    st.plotly_chart(pfig1)
