@@ -24,7 +24,7 @@ st.markdown(
     f'''
         <style>
             .sidebar .sidebar-content {{
-                width: 340px;
+                width: 320px;
             }}
         </style>
     ''',
@@ -63,16 +63,19 @@ if domain_opt == domain[1]:
     '''
     # India
     '''
-    ifig0, ifig1 = create_indfigs()
+    ifig0, ifig1, ifig2 = create_indfigs()
     
     choices = ['Cases & Deaths',
-               'Morbidity & Mortality Rates']
+               'Morbidity & Mortality Rates',
+               'Growth Rates']
     
     option = st.sidebar.selectbox('Select Chart:',choices)
     if option == choices[0]:
         st.plotly_chart(ifig0)
     if option == choices[1]:
         st.plotly_chart(ifig1)
+    if option == choices[2]:
+        st.plotly_chart(ifig2)
 
 if domain_opt==domain[2]:
     '''

@@ -8,9 +8,10 @@ Created on Sun Nov 29 23:04:44 2020
 # Import Libraries
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
+from scipy.signal import savgol_filter
 
 # Read data from eCDC website
 @st.cache(allow_output_mutation=True)
@@ -27,11 +28,11 @@ def load_data():
     cdata['dpc'] = round(cdata['cumcases']*1e6/cdata['popData2019'],2)
     return cdata
 
+
+
 @st.cache(allow_output_mutation=True)
 def create_indfigs():
     data = load_data()
-    
-    
     ifig0 = make_subplots(rows=2, cols=2,
                          subplot_titles=("Daily Cases", "Daily Deaths",
                                          "Total Cases","Total Deaths"))
@@ -56,4 +57,58 @@ def create_indfigs():
                         showlegend=False,
                         )
     ifig1.update_yaxes(type="log")
-    return ifig0, ifig1
+    
+    #Calculate Growth Rate
+    t0 = 80
+    dates = pd.to_datetime(data['dateRep']).dt.date.unique().tolist()
+    dates = dates[t0:]
+    end = len(dates)
+    start = end - 14
+    dp = pd.date_range(dates[start],periods=114).tolist()
+    
+    g1 = np.array(data['cumcases'][t0:].values.tolist())
+    g2 = np.array(data['cumcases'][t0-1:-1].values.tolist())
+    gr = 100*(g1-g2)/g1
+    grC = savgol_filter(gr,7,1)
+    
+    
+    
+    t = np.array(range(start,end))
+    y = grC[start:end]
+    a,b = np.polyfit(t,y,1)
+    
+    t = np.array(range(start,end+100))
+    ypC = a*t+b
+    
+    
+    g1 = np.array(data['cumdeaths'][t0:].values.tolist())
+    g2 = np.array(data['cumdeaths'][t0-1:-1].values.tolist())
+    gr = 100*(g1-g2)/g1
+    grD = savgol_filter(gr,7,1)
+    
+    end = len(dates)
+    start = end - 14
+    
+    t = np.array(range(start,end))
+    y = grD[start:end]
+    a,b = np.polyfit(t,y,1)
+    
+    t = np.array(range(start,end+100))
+    ypD = a*t+b
+    
+    ifig2 = go.Figure()
+    
+    ifig2.add_trace(go.Scatter(x=dates,y=grC, mode="lines", name="Cases",line={'dash': 'solid', 'color': 'blue'}))
+    ifig2.add_trace(go.Scatter(x=dp,y=ypC, mode="lines", name="Cases Predicted",line={'dash': 'dot', 'color': 'blue'}))
+    ifig2.add_trace(go.Scatter(x=dates,y=grD, mode="lines", name="Deaths",line={'dash': 'solid', 'color': 'red'}))
+    ifig2.add_trace(go.Scatter(x=dp,y=ypD, mode="lines", name="Deaths Predicted",line={'dash': 'dot', 'color': 'red'}))
+    
+    ifig2.update_yaxes(range=[0, 10])
+    ifig2.update_layout( xaxis_title='Date',
+                    yaxis_title='Growth rate (%)',
+                    width = 700, height=480
+                    )
+    
+    
+    
+    return ifig0, ifig1, ifig2
