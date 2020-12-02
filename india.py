@@ -42,7 +42,7 @@ def create_indfigs():
     ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cumdeaths'], name='Total Deaths',line_color='blue'),row=2, col=2)
     ifig0.update_layout( xaxis_title='Date',
                         yaxis_title='Deaths',
-                        width=800, height=480,
+                        width = 700, height=480,
                         showlegend=False,
                         )
     
@@ -52,7 +52,7 @@ def create_indfigs():
     ifig1.add_trace(go.Scatter(x=data['dateRep'], y=data['dpm'], name='Deaths per million',line_color='blue'),row=2, col=1)
     ifig1.update_layout( xaxis_title='Date',
                         #yaxis_title='Deaths',
-                        width=800, height=480,
+                        width = 700, height=480,
                         showlegend=False,
                         )
     ifig1.update_yaxes(type="log")

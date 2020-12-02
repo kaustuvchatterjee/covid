@@ -127,7 +127,7 @@ def india_pred():
     
     pfig0.update_layout( xaxis_title='Date',
                         #yaxis_title='Deaths',
-                        width=1000, height=400,
+                        width=700, height=300,
                         showlegend=False,
                         )
     pfig0.update_layout(shapes=[
@@ -249,7 +249,7 @@ def india_pred():
                             "yanchor": "top",
                             "font": {'size': 14}
                         },
-                        width=1000, height=520,
+                        width=700, height=420,
                         annotations=[
                             dict(
                                 x=0.97,
