@@ -129,7 +129,7 @@ def create_distfigs():
                             "xanchor": "center",
                             "yanchor": "top"
                         },
-                        width = 800, height = 480,                      
+                        width = 780, height = 480,                      
                         annotations=[
                             dict(
                                 x=0.96,
@@ -156,7 +156,7 @@ def create_distfigs():
     dfig1.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     dfig1.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - India Districts - Growth Rate',
-                       width = 800, height = 480,
+                       width = 780, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,
@@ -183,7 +183,7 @@ def create_distfigs():
     dfig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     dfig2.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - India Districts - Estimated Prevalence',
-                       width = 800, height = 480,
+                       width = 780, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,
@@ -212,7 +212,7 @@ def create_distfigs():
     
     dfig3.update_layout(title={'text':'Covid-19 District-wise Total Deaths',
                                "x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
-                       width = 800, height = 480,
+                       width = 780, height = 480,
                         annotations=[
                             dict(
                                 x=0.97,
@@ -246,7 +246,7 @@ def create_distfigs():
                      )
     
     dfig4.update_layout(title={"text":"Covid-19 District-wise Mortality Rate","x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
-                        width = 800, height = 480,
+                        width = 780, height = 480,
                         annotations=[
                             dict(
                                 x=0.97,
