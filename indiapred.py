@@ -131,6 +131,7 @@ def india_pred():
                         template = 'seaborn',
                         showlegend=False,
                         )
+    
     pfig0.update_layout(shapes=[
         # adds line at y=1
         dict(

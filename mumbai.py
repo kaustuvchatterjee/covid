@@ -63,19 +63,41 @@ def create_mumfigs():
     max_x = '2021-07-31'
     fig.update_yaxes(range=(0,max_y))
     fig.update_xaxes(range=(min_x,max_x))
-    fig.update_layout(shapes=[
-        dict(
-          type= 'line',
-          yref= 'paper', y0= 0, y1= 1,
-          xref= 'x', x0= '2020-08-22', x1= '2020-08-22'
-        ),
-        dict(
-          type= 'line',
-          yref= 'paper', y0= 0, y1= 1,
-          xref= 'x', x0= '2020-11-14', x1= '2020-11-14'
-        )
-    ])
     
+#    fig.update_layout(shapes=[
+#        dict(
+#          type = 'line',
+#          yref = 'paper', y0= 0, y1= 1,
+#          xref = 'x', x0= '2020-08-22', x1= '2020-08-22',
+#          line = dict(color='black', dash='dashdot')
+#        ),
+#        dict(
+#          type= 'line',
+#          yref= 'paper', y0= 0, y1= 1,
+#          xref= 'x', x0= '2020-11-14', x1= '2020-11-14'
+#        )
+#    ])
+    fig.add_shape(type="line",
+        x0= '2020-08-22', x1= '2020-08-22',
+        y0= 0, y1= 1,
+        xref='x',yref='paper',
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot",
+        )
+    )
+    fig.add_shape(type="line",
+        x0= '2020-11-14', x1= '2020-11-14',
+        y0= 0, y1= 1,
+        xref='x',yref='paper',
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot",
+        )
+    )
+        
     fig.add_annotation(x='2020-08-22', y=2300,
                 text="Ganesh Chaturthi",
                 showarrow=True,
