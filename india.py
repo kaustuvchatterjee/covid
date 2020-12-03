@@ -30,7 +30,7 @@ def load_data():
 
 
 
-@st.cache(allow_output_mutation=True)
+
 def create_indfigs():
     data = load_data()
     ifig0 = make_subplots(rows=2, cols=2,

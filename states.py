@@ -51,7 +51,7 @@ def load_geodata(sdf):
     
     return geo_df
 
-@st.cache(allow_output_mutation=True)
+
 def create_statefigs():
     
     data = load_data()

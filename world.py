@@ -24,7 +24,7 @@ def load_worlddata():
     data = data.dropna()
     return data
 
-@st.cache(allow_output_mutation=True)
+
 def create_worldfigs():
     
     data = load_worlddata()

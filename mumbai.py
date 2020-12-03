@@ -38,7 +38,7 @@ cdata['Smoothened']=smooth
     
 
 
-@st.cache()
+
 def create_mumfigs():
     fig = px.line(cdata,x='Date',y=['Daily Cases','Smoothened'])
     # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
