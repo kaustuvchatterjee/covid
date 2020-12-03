@@ -6,7 +6,7 @@ Created on Tue Dec  1 15:44:11 2020
 @author: kaustuv
 """
 # Import Libraries
-#import streamlit as st
+import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -26,7 +26,7 @@ def sir(y,t,N,beta, gamma):
     return dSdt, dIdt, dRdt
 
 # Read data from JHU website
-
+st.cache
 def load_inddata():
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     data = pd.read_csv(url)
@@ -132,7 +132,7 @@ def india_pred():
     
     pfig0.update_layout( xaxis_title='Date',
                         #yaxis_title='Deaths',
-                        width=700, height=300,
+                        width=780, height=320,
                         template = 'seaborn',
                         showlegend=False,
                         )
@@ -263,7 +263,7 @@ def india_pred():
                             "yanchor": "top",
                             "font": {'size': 14}
                         },
-                        width=700, height=420,
+                        width=780, height=420,
                         template = 'seaborn',
                         annotations=[
                             dict(
