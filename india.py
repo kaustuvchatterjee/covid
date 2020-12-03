@@ -104,11 +104,20 @@ def create_indfigs():
     ifig2.add_trace(go.Scatter(x=dp,y=ypD, mode="lines", name="Deaths Predicted",line={'dash': 'dot', 'color': 'red'}))
     
     ifig2.update_yaxes(range=[0, 10])
-    ifig2.update_layout( xaxis_title='Date',
+    ifig2.update_layout(title_text = 'Covid-19 - India - Growth Rates',
+                    xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
-                    width = 700, height=480
+                    width = 700, height=480,
+                    showlegend = False
                     )
-    
-    
-    
+    txt1 = "Growth Rate (Cases): {a: .2f}%"
+    txt2 = "Growth Rate (Deaths): {a: .2f}%"
+    ifig2.add_annotation(x=0.8, y=0.9,
+                          text = txt1.format(a=grC[-1]),
+                          xref='paper',yref='paper',
+                          showarrow=False)
+    ifig2.add_annotation(x=0.8, y=0.8,
+                          text = txt2.format(a=grD[-1]),
+                          xref='paper',yref='paper',
+                          showarrow=False)    
     return ifig0, ifig1, ifig2
