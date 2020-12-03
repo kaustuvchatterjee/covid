@@ -64,9 +64,8 @@ def india_pred():
     II=[x-y for x, y in zip(total, RR)]
     
     window = 7
-    end = len(total)
-    st = 88
-    en = st+window
+    en = len(total)
+    st = en-window
     
     idx = []
     glist = []
@@ -74,7 +73,7 @@ def india_pred():
     mlist = []
     rtlist = []
     
-    while st<=end-window:
+    while st>40:
         y=np.log(II[st:en])
         t=np.array(range(st,en))
         m,b = np.polyfit(t,y,1)
@@ -94,8 +93,14 @@ def india_pred():
         blist.append(beta)
         rtlist.append(R0)
         
-        st = st+window
-        en = st+window
+        en = en-window
+        st = en-window
+        
+    idx = np.array(idx[::-1])
+    mlist = mlist[::-1]
+    glist = glist[::-1]
+    blist = blist[::-1]
+    rtlist = rtlist[::-1]
         
     df = pd.DataFrame([idx,mlist,glist,blist,rtlist]).transpose()
     df.columns=["date_id", "m", "gamma", "beta", "Rt"]
@@ -132,21 +137,29 @@ def india_pred():
                         showlegend=False,
                         )
     
-    pfig0.update_layout(shapes=[
-        # adds line at y=1
-        dict(
-          type= 'line',
-          xref= 'x2', x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
-          yref= 'y2', y0= 1, y1= 1,
-        ),
-        dict(
-          type= 'line',
-          xref= 'x3', x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
-          yref= 'y3', y0= 0, y1= 0,
-        ),    ],
-        )
+
     
-  
+    pfig0.add_shape(type="line",
+        x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
+        y0= 1, y1= 1,
+        xref='x2',yref='y2',
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot",
+        )
+    )
+    
+    pfig0.add_shape(type="line",
+        x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
+        y0= 0, y1= 0,
+        xref='x3',yref='y3',
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot",
+        )
+    )     
     
 
     
