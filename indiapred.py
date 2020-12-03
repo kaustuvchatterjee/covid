@@ -116,18 +116,14 @@ def india_pred():
     df.head()
     
     # Plots
-    pfig0 = make_subplots(rows=1, cols=3,
-                         subplot_titles=('Beta vs Gamma', "R(t)",
-                                         "m = Beta-Gamma"))
+    pfig0 = make_subplots(rows=1, cols=2,subplot_titles=('Beta vs Gamma', "R(t)"))
     pfig0.add_trace(go.Scatter(x=df['Date'], y=df['gamma'].round(3),line_color='blue'),row=1, col=1)
     pfig0.add_trace(go.Scatter(x=df['Date'], y=df['beta'].round(3),line_color='red'),row=1, col=1)
     pfig0.add_trace(go.Scatter(x=df['Date'], y=df['Rt'].round(3),line_color='blue'),row=1, col=2)
-    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['m'].round(3),line_color='blue'),row=1, col=3)
     
     # Update xaxis properties
     pfig0.update_xaxes(title_text="Date", row=1, col=1)
     pfig0.update_xaxes(title_text="Date", row=1, col=2)
-    pfig0.update_xaxes(title_text="Date", row=1, col=3)
     
     
     pfig0.update_layout( xaxis_title='Date',
@@ -150,16 +146,6 @@ def india_pred():
         )
     )
     
-    pfig0.add_shape(type="line",
-        x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
-        y0= 0, y1= 0,
-        xref='x3',yref='y3',
-        line=dict(
-            color="black",
-            width=1,
-            dash="dashdot",
-        )
-    )     
     
 
     
