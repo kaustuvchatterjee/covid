@@ -6,7 +6,7 @@ Created on Tue Dec  1 15:44:11 2020
 @author: kaustuv
 """
 # Import Libraries
-import streamlit as st
+#import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -26,7 +26,7 @@ def sir(y,t,N,beta, gamma):
     return dSdt, dIdt, dRdt
 
 # Read data from JHU website
-@st.cache(allow_output_mutation=True)
+
 def load_inddata():
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     data = pd.read_csv(url)
@@ -57,7 +57,7 @@ def load_inddata():
 
 
 
-@st.cache(allow_output_mutation=True)
+
 def india_pred():
     total,deaths,recovered = load_inddata()
     RR=[x+y for x, y in zip(deaths, recovered)]
@@ -182,21 +182,21 @@ def india_pred():
         Smod.append(S[1:])
         Rmod.append(R[1:])
         tlist = [val for sublist in tdate for val in sublist]
-#        Ilist = [val for sublist in Imod for val in sublist]
+        Ilist = [val for sublist in Imod for val in sublist]
         Slist = [val for sublist in Smod for val in sublist]
-#        Rlist = [val for sublist in Rmod for val in sublist]
+        Rlist = [val for sublist in Rmod for val in sublist]
         
         #reset initial conditions
         I0 = I[-1]
         R0 = R[-1]
         S0 = S[-1]
-    
+
     #Initial Conditions
-    I0 = II[-1]
-    R0 = RR[-1]
+    I0 = Ilist[-1]
+    R0 = Rlist[-1]
     S0 = N-I0-R0
     days = 180
-    t = np.linspace(tlist[-1],tlist[-1]+days-1,days)
+    t = np.linspace(tlist[-1]+1,tlist[-1]+days,days)
     # Initial coditions vector
     y0 = S0,I0,R0
     gamma = df['gamma'].iloc[-3:-1].mean()
@@ -205,10 +205,10 @@ def india_pred():
     ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
     S,I,R = ret.T
     
-    
     startdate = datetime.strptime('2020-01-22','%Y-%m-%d')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
+    trange
     
     tdate = []
     td = []
@@ -230,9 +230,8 @@ def india_pred():
     daily_cases = np.diff(total)
     Daily_cases_mod = savgol_filter(Daily_cases_mod, 21, 1) 
     
-    C = list(map(lambda x : N-x, S[1:]))
+    C = list(map(lambda x : N-x, S))
     dc = np.diff(C)
-    
     
     pfig1 = go.Figure()
     pfig1.add_trace(go.Scatter(x=ta,y=daily_cases, mode="markers", name="Actual"))
