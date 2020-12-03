@@ -74,7 +74,7 @@ def create_worldfigs():
                             "xanchor": "center",
                             "yanchor": "top"
                         },
-                        width = 720, height = 480,
+                        width = 800, height = 480,
                         annotations=[
                             dict(
                                 x=0.97,
@@ -105,7 +105,7 @@ def create_worldfigs():
     
     wfig1.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - Deaths per Million Population',
-                       width = 720, height = 480,
+                       width = 800, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,
@@ -132,7 +132,7 @@ def create_worldfigs():
     
     wfig2.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - Current Growth Rate',
-                       width = 720, height = 480,
+                       width = 800, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,

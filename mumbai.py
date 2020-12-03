@@ -43,7 +43,7 @@ def create_mumfigs():
     fig = px.line(cdata,x='Date',y=['Daily Cases','Smoothened'])
     # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.update_layout(title_text = 'Covid-19 - Mumbai - Daily Cases',
-                       width = 700, height = 480,
+                       width = 800, height = 480,
                        showlegend=False,
                         annotations=[
                             dict(
