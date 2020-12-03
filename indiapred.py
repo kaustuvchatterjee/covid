@@ -128,6 +128,7 @@ def india_pred():
     pfig0.update_layout( xaxis_title='Date',
                         #yaxis_title='Deaths',
                         width=700, height=300,
+                        template = 'seaborn',
                         showlegend=False,
                         )
     pfig0.update_layout(shapes=[
@@ -250,6 +251,7 @@ def india_pred():
                             "font": {'size': 14}
                         },
                         width=700, height=420,
+                        template = 'seaborn',
                         annotations=[
                             dict(
                                 x=0.97,
