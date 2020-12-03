@@ -107,7 +107,7 @@ def create_indfigs():
     ifig2.update_layout(title_text = 'Covid-19 - India - Growth Rates',
                     xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
-                    width = 700, height=480,
+                    width = 800, height=480,
                     showlegend = False
                     )
     txt1 = "Growth Rate (Cases): {a: .2f}%"
