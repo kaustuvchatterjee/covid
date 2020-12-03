@@ -75,6 +75,7 @@ def create_worldfigs():
                             "yanchor": "top"
                         },
                         width = 780, height = 480,
+                        template = 'seaborn',
                         annotations=[
                             dict(
                                 x=0.97,

@@ -213,6 +213,7 @@ def create_distfigs():
     dfig3.update_layout(title={'text':'Covid-19 District-wise Total Deaths',
                                "x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        width = 780, height = 480,
+                       template = 'seaborn',
                         annotations=[
                             dict(
                                 x=0.97,
@@ -247,6 +248,7 @@ def create_distfigs():
     
     dfig4.update_layout(title={"text":"Covid-19 District-wise Mortality Rate","x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                         width = 780, height = 480,
+                        template = 'seaborn',
                         annotations=[
                             dict(
                                 x=0.97,

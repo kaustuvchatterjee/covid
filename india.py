@@ -45,19 +45,65 @@ def create_indfigs():
                         yaxis_title='Deaths',
                         width = 700, height=480,
                         showlegend=False,
+                        template = 'seaborn'
                         )
     
-    ifig1 = make_subplots(rows=2, cols=1,
-                         subplot_titles=("Cases per million", "Deaths per million"))
+    ifig1 = make_subplots(rows=2, cols=1)
+    
     ifig1.add_trace(go.Scatter(x=data['dateRep'], y=data['dpc'],name='Cases per million',line_color='blue'),row=1, col=1)
     ifig1.add_trace(go.Scatter(x=data['dateRep'], y=data['dpm'], name='Deaths per million',line_color='blue'),row=2, col=1)
-    ifig1.update_layout( xaxis_title='Date',
-                        #yaxis_title='Deaths',
-                        width = 700, height=480,
+    ifig1.update_layout(width = 800, height=480,
                         showlegend=False,
                         )
     ifig1.update_yaxes(type="log")
+    ifig1.update_layout(title_text = 'Covid-19 - India - Morbidity & Mortality',
+                        template = 'seaborn')
+
     
+    annotations = []
+    annotations.extend([
+        dict(
+            x=data['dateRep'].iloc[-1], y=np.log10(data['dpc'].iloc[-1]), # annotation point
+            xref='x1', 
+            yref='y1',
+            text=data['dpc'].iloc[-1],
+            showarrow=False,
+            font = dict(size=12),
+            xanchor='left', yanchor='middle'
+        ),
+        dict(
+            x=data['dateRep'].iloc[-1], y=np.log10(data['dpm'].iloc[-1]), # annotation point
+            xref='x2', 
+            yref='y2',
+            text=data['dpm'].iloc[-1],
+            showarrow=False,
+            font = dict(size=12),
+            xanchor='left', yanchor='middle'
+        ),
+         dict(
+            x=0.5,y=1, # annotation point
+            xref='paper', 
+            yref='paper',
+            text='Cases per Million Population',
+            showarrow=False,
+            font = dict(size=14),
+            xanchor='center', yanchor='bottom'
+        ),
+                 dict(
+            x=0.5,y=0.42, # annotation point
+            xref='paper', 
+            yref='paper',
+            text='Deaths per Million Population',
+            showarrow=False,
+            font = dict(size=14),
+            xanchor='center', yanchor='bottom'
+        ),             
+                ])
+        
+    ifig1.layout.annotations=annotations
+
+    
+
     #Calculate Growth Rate
     t0 = 80
     dates = pd.to_datetime(data['dateRep']).dt.date.unique().tolist()
@@ -108,15 +154,16 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
                     width = 800, height=480,
-                    showlegend = False
+                    showlegend = False,
+                    template = 'seaborn'
                     )
     txt1 = "Growth Rate (Cases): {a: .2f}%"
     txt2 = "Growth Rate (Deaths): {a: .2f}%"
-    ifig2.add_annotation(x=0.8, y=0.9,
+    ifig2.add_annotation(x=0.9, y=0.9,
                           text = txt1.format(a=grC[-1]),
                           xref='paper',yref='paper',
                           showarrow=False)
-    ifig2.add_annotation(x=0.8, y=0.8,
+    ifig2.add_annotation(x=0.9, y=0.8,
                           text = txt2.format(a=grD[-1]),
                           xref='paper',yref='paper',
                           showarrow=False)    

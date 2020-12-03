@@ -122,6 +122,7 @@ def create_statefigs():
                             "yanchor": "top"
                         },
                         width = 780, height = 480,
+                        template = 'seaborn',
                         annotations=[
                             dict(
                                 x=0.97,
@@ -163,6 +164,7 @@ def create_statefigs():
                             "yanchor": "top"
                         },
                         width = 780, height = 480,
+                        template = 'seaborn',
                         annotations=[
                             dict(
                                 x=0.97,
