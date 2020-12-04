@@ -14,7 +14,7 @@ from plotly.subplots import make_subplots
 from scipy.signal import savgol_filter
 
 # Read data from eCDC website
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_data():
     url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
     data = pd.read_csv(url)

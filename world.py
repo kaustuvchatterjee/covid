@@ -15,7 +15,7 @@ import streamlit as st
 
 # Read data from eCDC website
 
-@st.cache(allow_output_mutation=True)
+@st.cache
 def load_worlddata():
     url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
     data = pd.read_csv(url)
