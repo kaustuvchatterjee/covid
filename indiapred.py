@@ -56,6 +56,7 @@ def load_inddata():
     return total,deaths,recovered
 
 
+total,deaths,recovered = load_inddata()
 
 
 def india_pred():
