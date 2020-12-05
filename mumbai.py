@@ -45,7 +45,7 @@ def create_mumfigs():
     fig.add_trace(go.Scatter(x=cdata['Date'], y=cdata['Smoothened'], mode='lines', name='Smoothened', line={'dash': 'solid', 'color': 'red'}))
     
     fig.update_layout(title_text = 'Covid-19 - Mumbai - Daily Cases',
-                       width = 800, height = 480,
+                       width = 770, height = 480,
                        margin=dict(r=20, b=10, l=10, t=30),
                        template = 'seaborn',
                        showlegend=False,
