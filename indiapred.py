@@ -64,8 +64,8 @@ def india_pred():
     II=[x-y for x, y in zip(total, RR)]
     
     window = 7
-    en = len(total)
-    st = en-window
+    end = len(total)
+    start = end-window
     
     idx = []
     glist = []
@@ -73,13 +73,13 @@ def india_pred():
     mlist = []
     rtlist = []
     
-    while st>40:
-        y=np.log(II[st:en])
-        t=np.array(range(st,en))
+    while start>40:
+        y=np.log(II[start:end])
+        t=np.array(range(start,end))
         m,b = np.polyfit(t,y,1)
     
         g=[]
-        for i in range(st, en-1):
+        for i in range(start, end-1):
             oo=((RR[i+1]-RR[i])/II[i])
             g.append(oo)
         
@@ -87,14 +87,14 @@ def india_pred():
         beta = m+gamma
         R0 = beta/gamma
         
-        idx.append(st)
+        idx.append(start)
         mlist.append(m)
         glist.append(gamma)
         blist.append(beta)
         rtlist.append(R0)
         
-        en = en-window
-        st = en-window
+        end = end-window
+        start = end-window
         
     idx = np.array(idx[::-1])
     mlist = mlist[::-1]

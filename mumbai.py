@@ -7,7 +7,7 @@ This is a temporary script file.
 
 import pandas as pd
 import numpy as np
-import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 from scipy.signal import savgol_filter
 
@@ -40,8 +40,10 @@ cdata['Smoothened']=smooth
 
 
 def create_mumfigs():
-    fig = px.line(cdata,x='Date',y=['Daily Cases','Smoothened'])
-    # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=cdata['Date'], y=cdata['Daily Cases'], mode='lines', name='Daily Cases',line={'dash': 'dot', 'color': 'cadetblue'}))
+    fig.add_trace(go.Scatter(x=cdata['Date'], y=cdata['Smoothened'], mode='lines', name='Smoothened', line={'dash': 'solid', 'color': 'red'}))
+    
     fig.update_layout(title_text = 'Covid-19 - Mumbai - Daily Cases',
                        width = 800, height = 480,
                        margin=dict(r=20, b=10, l=10, t=30),
@@ -62,8 +64,8 @@ def create_mumfigs():
     max_y = cdata['Daily Cases'].max()+100
     min_x = cdata['Date'][0]
     max_x = '2021-07-31'
-    fig.update_yaxes(range=(0,max_y))
-    fig.update_xaxes(range=(min_x,max_x))
+    fig.update_yaxes(title_text="No of Cases", range=(0,max_y))
+    fig.update_xaxes(title_text="Date", range=(min_x,max_x))
     
 #    fig.update_layout(shapes=[
 #        dict(
