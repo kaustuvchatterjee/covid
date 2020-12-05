@@ -44,6 +44,7 @@ def create_mumfigs():
     # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     fig.update_layout(title_text = 'Covid-19 - Mumbai - Daily Cases',
                        width = 800, height = 480,
+                       margin=dict(r=20, b=10, l=10, t=30),
                        template = 'seaborn',
                        showlegend=False,
                         annotations=[

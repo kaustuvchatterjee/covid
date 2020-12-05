@@ -41,23 +41,29 @@ def create_indfigs():
     ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cumcases'], name='Total Cases',line_color='blue'),row=2, col=1)
     ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['deaths'],name='Daily Deaths',line_color='blue'),row=1, col=2)
     ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cumdeaths'], name='Total Deaths',line_color='blue'),row=2, col=2)
-    ifig0.update_layout( xaxis_title='Date',
-                        yaxis_title='Deaths',
-                        width = 700, height=480,
+
+    ifig0.update_layout(title={"text": "Covid-19 - India - Cases & Deaths",
+                               "x": 0.5,"y": 0.95,"xanchor": "center","yanchor": "bottom"},
+                        width = 800, height=480,
+                        margin=dict(r=20, b=10, l=10, t=60),
                         showlegend=False,
-                        template = 'seaborn'
+                        template='seaborn',
+                        xaxis_title='Date',
+                        yaxis_title='Deaths'
                         )
     
     ifig1 = make_subplots(rows=2, cols=1)
     
     ifig1.add_trace(go.Scatter(x=data['dateRep'], y=data['dpc'],name='Cases per million',line_color='blue'),row=1, col=1)
     ifig1.add_trace(go.Scatter(x=data['dateRep'], y=data['dpm'], name='Deaths per million',line_color='blue'),row=2, col=1)
-    ifig1.update_layout(width = 800, height=480,
+    ifig1.update_layout(title={"text": "Covid-19 - India - Morbidity & Mortality",
+                               "x": 0.5,"y": 0.95,"xanchor": "center","yanchor": "bottom"},
+                        width = 800, height=480,
+                        margin=dict(r=20, b=10, l=10, t=60),
                         showlegend=False,
+                        template='seaborn'
                         )
     ifig1.update_yaxes(type="log")
-    ifig1.update_layout(title_text = 'Covid-19 - India - Morbidity & Mortality',
-                        template = 'seaborn')
 
     
     annotations = []
@@ -154,16 +160,17 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
                     width = 800, height=480,
+                    margin=dict(r=20, b=10, l=10, t=30),
                     showlegend = False,
                     template = 'seaborn'
                     )
-    txt1 = "Growth Rate (Cases): {a: .2f}%"
-    txt2 = "Growth Rate (Deaths): {a: .2f}%"
+    txt1 = "Current Growth Rate (Cases): {a: .2f}%"
+    txt2 = "Current Growth Rate (Deaths): {a: .2f}%"
     ifig2.add_annotation(x=0.9, y=0.9,
                           text = txt1.format(a=grC[-1]),
                           xref='paper',yref='paper',
                           showarrow=False)
-    ifig2.add_annotation(x=0.9, y=0.8,
+    ifig2.add_annotation(x=0.9, y=0.86,
                           text = txt2.format(a=grD[-1]),
                           xref='paper',yref='paper',
                           showarrow=False)    

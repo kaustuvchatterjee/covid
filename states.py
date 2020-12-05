@@ -113,13 +113,13 @@ def create_statefigs():
     
     sfig0.update_layout( xaxis_title='Population',
                         yaxis_title='Deaths per million',
-                        margin=dict(r=20, b=10, l=10, t=10),
+                        margin=dict(r=20, b=10, l=10, t=30),
                         title={
                             "text": "Covid-19 - Mortality",
                             "x": 0.5,
                             "y": 0.95,
                             "xanchor": "center",
-                            "yanchor": "top"
+                            "yanchor": "bottom"
                         },
                         width = 780, height = 480,
                         template = 'seaborn',
@@ -155,13 +155,13 @@ def create_statefigs():
     
     sfig1.update_layout( xaxis_title='State',
                         yaxis_title='Prevalence(%)',
-                        margin=dict(r=20, b=10, l=10, t=10),
+                        margin=dict(r=20, b=10, l=10, t=30),
                         title={
                             "text": "Covid-19 - Estimated Prevalence",
                             "x": 0.5,
                             "y": 0.95,
                             "xanchor": "center",
-                            "yanchor": "top"
+                            "yanchor": "bottom"
                         },
                         width = 780, height = 480,
                         template = 'seaborn',
