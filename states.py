@@ -113,15 +113,15 @@ def create_statefigs():
     
     sfig0.update_layout( xaxis_title='Population',
                         yaxis_title='Deaths per million',
-                        margin=dict(r=20, b=10, l=10, t=10),
+                        margin=dict(r=20, b=10, l=10, t=30),
                         title={
                             "text": "Covid-19 - Mortality",
                             "x": 0.5,
                             "y": 0.95,
                             "xanchor": "center",
-                            "yanchor": "top"
+                            "yanchor": "bottom"
                         },
-                        width = 780, height = 480,
+                        width = 760, height = 480,
                         template = 'seaborn',
                         annotations=[
                             dict(
@@ -155,15 +155,15 @@ def create_statefigs():
     
     sfig1.update_layout( xaxis_title='State',
                         yaxis_title='Prevalence(%)',
-                        margin=dict(r=20, b=10, l=10, t=10),
+                        margin=dict(r=20, b=10, l=10, t=30),
                         title={
                             "text": "Covid-19 - Estimated Prevalence",
                             "x": 0.5,
                             "y": 0.95,
                             "xanchor": "center",
-                            "yanchor": "top"
+                            "yanchor": "bottom"
                         },
-                        width = 780, height = 480,
+                        width = 760, height = 480,
                         template = 'seaborn',
                         annotations=[
                             dict(
@@ -199,7 +199,7 @@ def create_statefigs():
     sfig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     sfig2.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - India - Deaths per Million Population',
-                       width = 780, height = 480,
+                       width = 760, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,
@@ -227,7 +227,7 @@ def create_statefigs():
     sfig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     sfig3.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - India - Growth Rate',
-                       width = 780, height = 480,
+                       width = 760, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,
@@ -255,7 +255,7 @@ def create_statefigs():
     sfig4.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
     sfig4.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
                        title_text = 'Covid-19 - India - Estimated Prevalence',
-                       width = 780, height = 480,
+                       width = 760, height = 480,
                         annotations=[
                             dict(
                                 x=0.96,
