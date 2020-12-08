@@ -11,7 +11,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from scipy.signal import savgol_filter
 
-@st.cache
+#@st.cache
 def load_data():
     url = 'https://api.covid19india.org/csv/latest/districts.csv'
     data = pd.read_csv(url)
