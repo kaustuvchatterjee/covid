@@ -65,8 +65,8 @@ def india_pred():
     II=[x-y for x, y in zip(total, RR)]
     
     window = 7
-    end = len(total)
-    start = end-window
+    start = 43
+    end = start+window
     
     idx = []
     glist = []
@@ -74,7 +74,7 @@ def india_pred():
     mlist = []
     rtlist = []
     
-    while start>40:
+    while end<=len(total):
         y=np.log(II[start:end])
         t=np.array(range(start,end))
         m,b = np.polyfit(t,y,1)
@@ -94,14 +94,14 @@ def india_pred():
         blist.append(beta)
         rtlist.append(R0)
         
-        end = end-window
-        start = end-window
+        start = end
+        end = start+window
         
-    idx = np.array(idx[::-1])
-    mlist = mlist[::-1]
-    glist = glist[::-1]
-    blist = blist[::-1]
-    rtlist = rtlist[::-1]
+    #idx = np.array(idx[::-1])
+    #mlist = mlist[::-1]
+    #glist = glist[::-1]
+    #blist = blist[::-1]
+    #rtlist = rtlist[::-1]
         
     df = pd.DataFrame([idx,mlist,glist,blist,rtlist]).transpose()
     df.columns=["date_id", "m", "gamma", "beta", "Rt"]
@@ -135,7 +135,7 @@ def india_pred():
                         showlegend=False,
                         )
     
-
+    
     
     pfig0.add_shape(type="line",
         x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
@@ -149,7 +149,7 @@ def india_pred():
     )
     
     
-
+    ## Model
     
     # Global Variables
     N = 1387e6 #Total Population
@@ -175,7 +175,7 @@ def india_pred():
         gamma = df[df['date_id']==tx]['gamma'].iloc[0]
         ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
         S,I,R = ret.T
-
+    
         tt = list(map(lambda x : x + tx, t)) 
         I = I.tolist()
         tdate.append(tt[1:])
@@ -191,7 +191,7 @@ def india_pred():
         I0 = I[-1]
         R0 = R[-1]
         S0 = S[-1]
-
+    
     #Initial Conditions
     I0 = Ilist[-1]
     R0 = Rlist[-1]
@@ -220,7 +220,7 @@ def india_pred():
         tdate.append(startdate+timedelta(i))
     
     for i in t:
-        td.append(startdate+timedelta(i))
+        td.append(startdate+timedelta(i+1))
         
     for i in trange:
         ta.append(startdate+timedelta(i))
@@ -262,5 +262,6 @@ def india_pred():
                                 )
                             ]
                       )
-    
+  
+
     return pfig0, pfig1
