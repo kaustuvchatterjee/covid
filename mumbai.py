@@ -18,7 +18,6 @@ def load_data():
 
 data = load_data()
 
-
 cdata = data[data['District']=='Mumbai']
 cdata['Daily Cases']=cdata['Confirmed'].diff()
 cdata = cdata[1:]
