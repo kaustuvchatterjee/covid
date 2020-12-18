@@ -16,16 +16,14 @@ from scipy.signal import savgol_filter
 # Read data from eCDC website
 @st.cache
 def load_data():
-#    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
-#    data = pd.read_csv(url)
-    url = 'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-12-14.xlsx'
-    data = pd.read_excel(url,encoding = "ISO-8859-1")
+    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
+    data = pd.read_csv(url)
     data['dateRep'] = pd.to_datetime(data['dateRep'], format = '%d/%m/%Y')
     data = data.reindex(index=data.index[::-1])
     data = data.dropna()
     cdata = data[data['geoId']=='IN']
-    cdata['cumcases']=cdata['cases'].cumsum()
-    cdata['cumdeaths']=cdata['deaths'].cumsum()
+    cdata['cumcases']=cdata['cases_weekly'].cumsum()
+    cdata['cumdeaths']=cdata['deaths_weekly'].cumsum()
     cdata['dpm'] = round(cdata['cumdeaths']*1e6/cdata['popData2019'],2)
     cdata['dpc'] = round(cdata['cumcases']*1e6/cdata['popData2019'],2)
     return cdata
@@ -39,9 +37,9 @@ def create_indfigs():
                          subplot_titles=("Daily Cases", "Daily Deaths",
                                          "Total Cases","Total Deaths"))
     
-    ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cases'],name='Daily Cases',line_color='blue'),row=1, col=1)
+    ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cases_weekly'],name='Daily Cases',line_color='blue'),row=1, col=1)
     ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cumcases'], name='Total Cases',line_color='blue'),row=2, col=1)
-    ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['deaths'],name='Daily Deaths',line_color='blue'),row=1, col=2)
+    ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['deaths_weekly'],name='Daily Deaths',line_color='blue'),row=1, col=2)
     ifig0.add_trace(go.Scatter(x=data['dateRep'], y=data['cumdeaths'], name='Total Deaths',line_color='blue'),row=2, col=2)
 
     ifig0.update_layout(title={"text": "Covid-19 - India - Cases & Deaths",
@@ -113,17 +111,18 @@ def create_indfigs():
     
 
     #Calculate Growth Rate
-    t0 = 80
+    t0 = 9
     dates = pd.to_datetime(data['dateRep']).dt.date.unique().tolist()
     dates = dates[t0:]
     end = len(dates)
-    start = end - 14
-    dp = pd.date_range(dates[start],periods=114).tolist()
+    start = end - 2
+    dp = pd.date_range(dates[start],periods=24, freq="W").tolist()
     
     g1 = np.array(data['cumcases'][t0:].values.tolist())
     g2 = np.array(data['cumcases'][t0-1:-1].values.tolist())
     gr = 100*(g1-g2)/g1
-    grC = savgol_filter(gr,7,1)
+    gr = gr/7
+    grC = savgol_filter(gr,3,1)
     
     
     
@@ -131,23 +130,24 @@ def create_indfigs():
     y = grC[start:end]
     a,b = np.polyfit(t,y,1)
     
-    t = np.array(range(start,end+100))
+    t = np.array(range(start,end+22))
     ypC = a*t+b
     
     
     g1 = np.array(data['cumdeaths'][t0:].values.tolist())
     g2 = np.array(data['cumdeaths'][t0-1:-1].values.tolist())
     gr = 100*(g1-g2)/g1
-    grD = savgol_filter(gr,7,1)
+    gr = gr/7
+    grD = savgol_filter(gr,3,1)
     
     end = len(dates)
-    start = end - 14
+    start = end - 2
     
     t = np.array(range(start,end))
     y = grD[start:end]
     a,b = np.polyfit(t,y,1)
     
-    t = np.array(range(start,end+100))
+    t = np.array(range(start,end+22))
     ypD = a*t+b
     
     ifig2 = go.Figure()

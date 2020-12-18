@@ -17,9 +17,8 @@ import streamlit as st
 
 @st.cache
 def load_worlddata():
-#    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
-    url = 'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-12-14.xlsx'
-    data = pd.read_excel(url,encoding = "ISO-8859-1")
+    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
+    data = pd.read_csv(url)
     data['dateRep'] = pd.to_datetime(data['dateRep'], format = '%d/%m/%Y')
     data = data.reindex(index=data.index[::-1])
     data = data.dropna()
@@ -37,18 +36,18 @@ def create_worldfigs():
     for geoId in cntry_id:
         cdata = data[data["geoId"]==geoId]
         pop = cdata["popData2019"].max()
-        total_deaths = cdata["deaths"].cumsum().max()
+        total_deaths = cdata["deaths_weekly"].cumsum().max()
         dpm = round(total_deaths * 1e6 / pop,0)
         country = cdata["countriesAndTerritories"]
         country=country.iloc[0]
         country = country.replace("_"," ")
         iso = cdata["countryterritoryCode"]
         iso = iso.iloc[0]
-        d = cdata["deaths"].cumsum()
+        d = cdata["deaths_weekly"].cumsum()
         ldpm = d * 1e6 / pop
-        delta = ldpm.iloc[-15::].diff()
-        gr = delta[1::]*100/ldpm[-14::]
-        gr = round(gr.mean(),2)
+        delta = ldpm.iloc[-3::].diff()
+        gr = delta[1::]*100/ldpm[-3:-1]
+        gr = round(gr.mean()/7,2)
     
         stats_df = stats_df.append({'population': pop, 'total_deaths': total_deaths, 
                                     'dpm': dpm, 'country': country, 'gr': gr, 'iso': iso },
