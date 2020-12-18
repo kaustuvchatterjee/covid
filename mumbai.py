@@ -21,6 +21,7 @@ data = load_data()
 cdata = data[data['District']=='Mumbai']
 cdata['Daily Cases']=cdata['Confirmed'].diff()
 cdata = cdata[1:]
+
 if cdata['Daily Cases'].iloc[-1]<=0:
     cdata = cdata[:-2]
 cdata.reset_index(inplace=True)
