@@ -116,7 +116,7 @@ def create_indfigs():
     dates = dates[t0:]
     end = len(dates)
     start = end - 2
-    dp = pd.date_range(dates[start],periods=24, freq="W").tolist()
+    dp = pd.date_range(dates[start],periods=24, freq="7D").tolist()
     
     g1 = np.array(data['cumcases'][t0:].values.tolist())
     g2 = np.array(data['cumcases'][t0-1:-1].values.tolist())
