@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from scipy.signal import savgol_filter
+import streamlit as st
 
 
 def load_data():
@@ -23,8 +24,9 @@ cdata['Daily Cases']=cdata['Confirmed'].diff()
 cdata = cdata[1:]
 
 if cdata['Daily Cases'].iloc[-1]<=0:
-    cdata = cdata[:-2]
+    cdata = cdata[:-1]
 cdata.reset_index(inplace=True)
+
 n = np.arange(0,len(cdata['Daily Cases'])-1,1)
 
 for i in n:
