@@ -17,8 +17,9 @@ import streamlit as st
 
 @st.cache
 def load_worlddata():
-    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
-    data = pd.read_csv(url)
+#    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
+    url = 'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-12-14.xlsx'
+    data = pd.read_excel(url,encoding = "ISO-8859-1")
     data['dateRep'] = pd.to_datetime(data['dateRep'], format = '%d/%m/%Y')
     data = data.reindex(index=data.index[::-1])
     data = data.dropna()
