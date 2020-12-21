@@ -63,7 +63,7 @@ def create_indfigs():
     
     ifig0.add_trace(go.Scatter(x=data['Date'], y=data['dailycases'],name='Daily Cases',line_color='blue'),row=1, col=1)
     ifig0.add_trace(go.Scatter(x=data['Date'], y=data['cumcases'], name='Total Cases',line_color='blue'),row=2, col=1)
-    ifig0.add_trace(go.Scatter(x=data['Date'], y=data['dailycases'],name='Daily Deaths',line_color='blue'),row=1, col=2)
+    ifig0.add_trace(go.Scatter(x=data['Date'], y=data['dailydeaths'],name='Daily Deaths',line_color='blue'),row=1, col=2)
     ifig0.add_trace(go.Scatter(x=data['Date'], y=data['cumdeaths'], name='Total Deaths',line_color='blue'),row=2, col=2)
 
     ifig0.update_layout(title={"text": "Covid-19 - India - Cases & Deaths",
