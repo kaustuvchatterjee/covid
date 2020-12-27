@@ -27,6 +27,7 @@ if cdata['Daily Cases'].iloc[-1]<=0:
     cdata = cdata[:-1]
 cdata.reset_index(inplace=True)
 
+
 n = np.arange(0,len(cdata['Daily Cases'])-1,1)
 
 for i in n:
