@@ -126,7 +126,7 @@ def create_mumfigs():
                 showarrow=True,
                 arrowhead=1,
                 ax=40,ay=-20)
-    fig.add_annotation(x='2020-12-25', y=2000,
+    fig.add_annotation(x='2020-12-25', y=2300,
                 text="Christmas",
                 showarrow=True,
                 arrowhead=1,
