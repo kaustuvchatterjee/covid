@@ -107,7 +107,7 @@ def create_mumfigs():
         )
     )
     fig.add_shape(type="line",
-        x0= '2020-12-25', x1= '2020-11-14',
+        x0= '2020-12-25', x1= '2020-12-25',
         y0= 0, y1= 1,
         xref='x',yref='paper',
         line=dict(
