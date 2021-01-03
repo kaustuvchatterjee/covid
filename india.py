@@ -11,9 +11,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
-import scipy.integrate as spi
 from scipy.signal import savgol_filter
-from datetime import datetime, timedelta
 
 # Read data from JHU website
 @st.cache

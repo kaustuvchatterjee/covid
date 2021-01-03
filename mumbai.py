@@ -13,7 +13,6 @@ import streamlit as st
 
 
 @st.cache
-
 def load_data():
     url = 'https://api.covid19india.org/csv/latest/districts.csv'
     data = pd.read_csv(url)
