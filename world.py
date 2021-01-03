@@ -186,7 +186,7 @@ def create_worldfigs():
                 xanchor='left', yanchor='middle')
             annotations.append(annot)
     
-    wfig3.update_layout(title_text = 'Covid-19 - World - Total Deaths <br> (Countries with more than 50,000 deaths)',
+    wfig3.update_layout(title_text = 'Covid-19 - World - Deaths per Million <br> (Countries with more than 50,000 deaths)',
                     xaxis_title='Date',
                     yaxis_title='Deaths per million',
                     width = 740, height=480,
