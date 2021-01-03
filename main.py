@@ -38,11 +38,12 @@ domain_opt = st.sidebar.selectbox('Select Domain:',domain)
 
 if domain_opt == domain[0]:
 
-    wfig0, wfig1, wfig2 = create_worldfigs()
+    wfig0, wfig1, wfig2, wfig3 = create_worldfigs()
     
     choices = ['Population v/s Deaths per Million',
                'Map - Deaths per Million',
-               'Map - Growth Rate']
+               'Map - Growth Rate',
+               'Death per Million Population']
     
     '''
     ## World
@@ -58,7 +59,10 @@ if domain_opt == domain[0]:
     if option == choices[2]:
         st.plotly_chart(wfig2)
         st.text('Hover on countries to see additional data')
-
+    if option == choices[3]:
+        st.plotly_chart(wfig3)
+        
+        
 if domain_opt == domain[1]:
     '''
     # India

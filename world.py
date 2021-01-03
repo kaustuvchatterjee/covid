@@ -6,6 +6,7 @@ This is a temporary script file.
 """
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 
@@ -149,5 +150,50 @@ def create_worldfigs():
                                 )
                             ]
                        )
+
+
+    # DPM Time-series
+    wfig3 = go.Figure()
+    cntry_id = data["geoId"].unique().tolist()
+    annotations = []
+#    stats_df = pd.DataFrame(columns=['iso','country', 'population', 'total_deaths', 'dpm', 'gr'])
+    for geoId in cntry_id:
+        cdata = data[data["geoId"]==geoId]
+        pop = cdata["popData2019"].max()
+        date = cdata["dateRep"]
+        total_deaths = cdata["deaths_weekly"].cumsum().max()
+        dpm = round(total_deaths * 1e6 / pop,0)
+        if total_deaths > 50000:
+            country = cdata["countriesAndTerritories"]
+            country=country.iloc[0]
+            country = country.replace("_"," ")
+            iso = cdata["countryterritoryCode"]
+            iso = iso.iloc[0]
+            d = cdata["deaths_weekly"].cumsum()
+            ldpm = round(d * 1e6 / pop, 2)
+            delta = ldpm.iloc[-3::].diff()
+            gr = delta[1::]*100/ldpm[-3:-1]
+            gr = round(gr.mean()/7,2)
+            
+            wfig3.add_trace(go.Scatter(x=date, y=ldpm, mode='lines',name=iso))
+            annot = dict(
+                x=date.iloc[-1], y=ldpm.iloc[-1], # annotation point
+                xref='x', 
+                yref='y',
+                text="("+str(gr)+"%)",
+                showarrow=False,
+                font = dict(size=12),
+                xanchor='left', yanchor='middle')
+            annotations.append(annot)
     
-    return wfig0, wfig1, wfig2
+    wfig3.update_layout(title_text = 'Covid-19 - World - Total Deaths <br> (Countries with more than 50,000 deaths)',
+                    xaxis_title='Date',
+                    yaxis_title='Deaths per million',
+                    width = 740, height=480,
+                    margin=dict(r=20, b=10, l=10, t=30),
+                    showlegend = True,
+                    template = 'seaborn'
+                    )
+    wfig3.layout.annotations=annotations    
+    
+    return wfig0, wfig1, wfig2, wfig3
