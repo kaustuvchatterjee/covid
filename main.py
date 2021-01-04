@@ -53,14 +53,18 @@ if domain_opt == domain[0]:
     if option == choices[0]:
         st.plotly_chart(wfig0)
         st.text('Hover on data points to see additional data')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
     if option == choices[1]:
         st.plotly_chart(wfig1)
         st.text('Hover on countries to see additional data')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
     if option == choices[2]:
         st.plotly_chart(wfig2)
         st.text('Hover on countries to see additional data')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
     if option == choices[3]:
         st.plotly_chart(wfig3)
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
         
         
 if domain_opt == domain[1]:
@@ -76,10 +80,13 @@ if domain_opt == domain[1]:
     option = st.sidebar.selectbox('Select Chart:',choices)
     if option == choices[0]:
         st.plotly_chart(ifig0)
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
     if option == choices[1]:
         st.plotly_chart(ifig1)
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
     if option == choices[2]:
         st.plotly_chart(ifig2)
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
 
 if domain_opt==domain[2]:
     '''
@@ -97,18 +104,23 @@ if domain_opt==domain[2]:
     if option == choices[0]:
         st.plotly_chart(sfig0)
         st.text('Hover on data points to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/state_wise_daily.csv')
     if option == choices[1]:
         st.plotly_chart(sfig1)
         st.text('Hover on data points to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/state_wise_daily.csv')
     if option == choices[2]:
         st.plotly_chart(sfig2)
         st.text('Hover on states to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/state_wise_daily.csv')
     if option == choices[3]:
         st.plotly_chart(sfig3)
         st.text('Hover on states to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/state_wise_daily.csv')
     if option == choices[4]:
         st.plotly_chart(sfig4)
         st.text('Hover on states points to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/state_wise_daily.csv')
         
         
 if domain_opt == domain[3]:
@@ -127,18 +139,23 @@ if domain_opt == domain[3]:
     if option == choices[0]:
         st.plotly_chart(dfig3)
         st.text('Hover on data points to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/districts.csv')
     if option == choices[1]:
         st.plotly_chart(dfig4)
         st.text('Hover on data points to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/districts.csv')
     if option == choices[2]:
         st.plotly_chart(dfig0)
         st.text('Hover on districts to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/districts.csv')
     if option == choices[3]:
         st.plotly_chart(dfig1)
         st.text('Hover on districts to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/districts.csv')
     if option == choices[4]:
         st.plotly_chart(dfig2)
         st.text('Hover on districts to see additional data')
+        st.text('Data Source: https://api.covid19india.org/csv/latest/districts.csv')
         
 if domain_opt == domain[4]:
     r'''
@@ -151,6 +168,7 @@ if domain_opt == domain[4]:
     Prediction based on average of estimated parameters of last 3 weeks.
     '''
     st.plotly_chart(pfig1)
+    st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
 
 if domain_opt == domain[5]:
     '''
@@ -158,3 +176,4 @@ if domain_opt == domain[5]:
     '''
     mfig0 = create_mumfigs()
     st.plotly_chart(mfig0)
+    st.text('Data Source: https://api.covid19india.org/csv/latest/districts.csv')
