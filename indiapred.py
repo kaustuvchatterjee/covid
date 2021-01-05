@@ -118,8 +118,8 @@ def india_pred():
     
     # Plots
     pfig0 = make_subplots(rows=1, cols=2,subplot_titles=('Beta vs Gamma', "R(t)"))
-    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['gamma'].round(3),line_color='blue'),row=1, col=1)
-    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['beta'].round(3),line_color='red'),row=1, col=1)
+    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['gamma'].round(3),line_color='blue',name='Gamma'),row=1, col=1)
+    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['beta'].round(3),line_color='red',name='Beta'),row=1, col=1)
     pfig0.add_trace(go.Scatter(x=df['Date'], y=df['Rt'].round(3),line_color='blue'),row=1, col=2)
     
     # Update xaxis properties
