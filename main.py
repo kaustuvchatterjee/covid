@@ -53,18 +53,18 @@ if domain_opt == domain[0]:
     if option == choices[0]:
         st.plotly_chart(wfig0)
         st.text('Hover on data points to see additional data')
-        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/csv')
     if option == choices[1]:
         st.plotly_chart(wfig1)
         st.text('Hover on countries to see additional data')
-        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/csv')
     if option == choices[2]:
         st.plotly_chart(wfig2)
         st.text('Hover on countries to see additional data')
-        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/csv')
     if option == choices[3]:
         st.plotly_chart(wfig3)
-        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+        st.text('Data Source: ECDC - https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/csv')
         
         
 if domain_opt == domain[1]:
