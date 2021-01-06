@@ -19,12 +19,12 @@ import streamlit as st
 @st.cache
 
 def load_worlddata():
-#    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
     url = 'https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/csv'
     data = pd.read_csv(url)
     data['dateRep'] = data['year_week'].str.replace('-','')+'0'
     data['dateRep'] = pd.to_datetime(data['dateRep'], format = '%Y%W%w')
-#    data = data.reindex(index=data.index[::-1])
+    data['dateRep'] = data['dateRep']-pd.Timedelta(7,'d')
+
     data = data.dropna()
     return data
 
