@@ -18,10 +18,12 @@ import streamlit as st
 
 @st.cache
 def load_worlddata():
-    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
+#    url = 'https://opendata.ecdc.europa.eu/covid19/casedistribution/csv'
+    url = 'https://opendata.ecdc.europa.eu/covid19/nationalcasedeath/csv'
     data = pd.read_csv(url)
-    data['dateRep'] = pd.to_datetime(data['dateRep'], format = '%d/%m/%Y')
-    data = data.reindex(index=data.index[::-1])
+    data['dateRep'] = data['year_week'].str.replace('-','')+'0'
+    data['dateRep'] = pd.to_datetime(data['dateRep'], format = '%Y%W%w')
+#    data = data.reindex(index=data.index[::-1])
     data = data.dropna()
     return data
 
@@ -32,19 +34,19 @@ def create_worldfigs():
     data = load_worlddata()
     
     # Collect stats
-    cntry_id = data["geoId"].unique()
+    cntry_id = data["country_code"].unique()
     stats_df = pd.DataFrame(columns=['iso','country', 'population', 'total_deaths', 'dpm', 'gr'])
-    for geoId in cntry_id:
-        cdata = data[data["geoId"]==geoId]
-        pop = cdata["popData2019"].max()
-        total_deaths = cdata["deaths_weekly"].cumsum().max()
+    for country_code in cntry_id:
+        cdata = data[data["country_code"]==country_code]
+        pop = cdata["population"].max()
+        total_deaths = cdata[cdata["indicator"]=="deaths"]["weekly_count"].cumsum().max()
         dpm = round(total_deaths * 1e6 / pop,0)
-        country = cdata["countriesAndTerritories"]
+        country = cdata["country"]
         country=country.iloc[0]
         country = country.replace("_"," ")
-        iso = cdata["countryterritoryCode"]
+        iso = cdata["country_code"]
         iso = iso.iloc[0]
-        d = cdata["deaths_weekly"].cumsum()
+        d = cdata[cdata["indicator"]=="deaths"]["weekly_count"].cumsum()
         ldpm = d * 1e6 / pop
         delta = ldpm.iloc[-3::].diff()
         gr = delta[1::]*100/ldpm[-3:-1]
@@ -154,22 +156,22 @@ def create_worldfigs():
 
     # DPM Time-series
     wfig3 = go.Figure()
-    cntry_id = data["geoId"].unique().tolist()
+    cntry_id = data["country_code"].unique().tolist()
     annotations = []
 #    stats_df = pd.DataFrame(columns=['iso','country', 'population', 'total_deaths', 'dpm', 'gr'])
     for geoId in cntry_id:
-        cdata = data[data["geoId"]==geoId]
-        pop = cdata["popData2019"].max()
+        cdata = data[data["country_code"]==geoId]
+        pop = cdata["population"].max()
         date = cdata["dateRep"]
-        total_deaths = cdata["deaths_weekly"].cumsum().max()
+        total_deaths = cdata[cdata["indicator"]=="deaths"]["weekly_count"].cumsum().max()
         dpm = round(total_deaths * 1e6 / pop,0)
         if total_deaths > 50000:
-            country = cdata["countriesAndTerritories"]
+            country = cdata["country"]
             country=country.iloc[0]
             country = country.replace("_"," ")
-            iso = cdata["countryterritoryCode"]
+            iso = cdata["country_code"]
             iso = iso.iloc[0]
-            d = cdata["deaths_weekly"].cumsum()
+            d = cdata[cdata["indicator"]=="deaths"]["weekly_count"].cumsum()
             ldpm = round(d * 1e6 / pop, 2)
             delta = ldpm.iloc[-3::].diff()
             gr = delta[1::]*100/ldpm[-3:-1]

@@ -33,7 +33,8 @@ def load_data():
       axis='columns', inplace=True)
     deaths=india_cdata.values.tolist()[0]
     
-    popData2019 = 1366417756
+#    popData2019 = 1366417756
+    popData2019 = 1380004385
     cdata = pd.DataFrame([total,deaths]).transpose()
     cdata["date_id"] = cdata.index
     cdata.columns=["cumcases", "cumdeaths","date_id"]
