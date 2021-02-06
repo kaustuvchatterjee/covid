@@ -19,7 +19,7 @@ def load_data():
     data = pd.read_csv(url)
     return data
 
-@st.cache
+# @st.cache
 def load_geodata(sdf):
     filename = 'maps/s2.shp'
     geo_df = gpd.read_file(filename).to_crs("EPSG:4326")

@@ -26,7 +26,7 @@ def sir(y,t,N,beta, gamma):
     return dSdt, dIdt, dRdt
 
 # Read data from JHU website
-@st.cache
+# @st.cache
 def load_inddata():
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     data = pd.read_csv(url)
