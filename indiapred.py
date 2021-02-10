@@ -26,7 +26,7 @@ def sir(y,t,N,beta, gamma):
     return dSdt, dIdt, dRdt
 
 # Read data from JHU website
-@st.cache
+# @st.cache
 def load_inddata():
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     data = pd.read_csv(url)
@@ -223,7 +223,7 @@ def india_pred():
         td.append(startdate+timedelta(i+1))
         
     for i in trange:
-        ta.append(startdate+timedelta(i))
+        ta.append(startdate+timedelta(i+1))
     
     
     Total_cases_mod = list(map(lambda x : N-x, Slist)) 
@@ -237,7 +237,7 @@ def india_pred():
     pfig1 = go.Figure()
     pfig1.add_trace(go.Scatter(x=ta,y=daily_cases, mode="markers", name="Actual"))
     pfig1.add_trace(go.Scatter(x=tdate,y=Daily_cases_mod, mode="lines", name="Model"))
-    pfig1.add_trace(go.Scatter(x=td[1:],y=dc, mode="lines", name="Predicted"))
+    pfig1.add_trace(go.Scatter(x=td,y=dc, mode="lines", name="Predicted"))
     
     
     pfig1.update_layout( xaxis_title='Date',
