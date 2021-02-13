@@ -113,6 +113,16 @@ def create_mumfigs():
             dash="dashdot",
         )
     )
+    fig.add_shape(type="line",
+        x0= '2021-02-01', x1= '2021-02-01',
+        y0= 0, y1= 1,
+        xref='x',yref='paper',
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot",
+        )
+    )
     fig.add_annotation(x='2020-08-22', y=2300,
                 text="Ganesh Chaturthi",
                 showarrow=True,
@@ -128,5 +138,9 @@ def create_mumfigs():
                 showarrow=True,
                 arrowhead=1,
                 ax=40,ay=-20)
-
+    fig.add_annotation(x='2021-02-01', y=2000,
+                text="Suburban trains reopened",
+                showarrow=True,
+                arrowhead=1,
+                ax=40,ay=-20)
     return fig
