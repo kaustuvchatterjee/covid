@@ -139,7 +139,7 @@ def create_mumfigs():
                 arrowhead=1,
                 ax=40,ay=-20)
     fig.add_annotation(x='2021-02-01', y=2000,
-                text="Suburban trains reopened",
+                text="Suburban trains resume",
                 showarrow=True,
                 arrowhead=1,
                 ax=40,ay=-20)
