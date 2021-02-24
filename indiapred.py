@@ -200,8 +200,8 @@ def india_pred():
     t = np.linspace(tlist[-1]+1,tlist[-1]+days,days)
     # Initial coditions vector
     y0 = S0,I0,R0
-    gamma = df['gamma'].iloc[-1:].mean()
-    beta = df['beta'].iloc[-1:].mean()
+    gamma = df['gamma'].iloc[-2:].mean()
+    beta = df['beta'].iloc[-2:].mean()
     
     ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
     S,I,R = ret.T
