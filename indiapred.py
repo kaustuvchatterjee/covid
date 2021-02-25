@@ -192,16 +192,18 @@ def india_pred():
         R0 = R[-1]
         S0 = S[-1]
     
+    ## Prediction
     #Initial Conditions
     I0 = Ilist[-1]
     R0 = Rlist[-1]
-    S0 = N-I0-R0
+    # S0 = N-I0-R0
+    S0 = Slist[-1]
     days = 180
     t = np.linspace(tlist[-1]+1,tlist[-1]+days,days)
     # Initial coditions vector
     y0 = S0,I0,R0
-    gamma = df['gamma'].iloc[-2:].mean()
-    beta = df['beta'].iloc[-2:].mean()
+    gamma = df['gamma'].iloc[-1:].mean()
+    beta = df['beta'].iloc[-1:].mean()
     
     ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
     S,I,R = ret.T
