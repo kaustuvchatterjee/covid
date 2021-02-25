@@ -199,7 +199,7 @@ def india_pred():
     # S0 = N-I0-R0
     S0 = Slist[-1]
     days = 180
-    t = np.linspace(tlist[-1]+1,tlist[-1]+days,days)
+    t = np.linspace(tlist[-1],tlist[-1]+days,days)
     # Initial coditions vector
     y0 = S0,I0,R0
     gamma = df['gamma'].iloc[-1:].mean()
