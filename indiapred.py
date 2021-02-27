@@ -64,8 +64,17 @@ def india_pred():
     RR=[x+y for x, y in zip(deaths, recovered)]
     II=[x-y for x, y in zip(total, RR)]
     
+    l = len(total)
+    s = 43
+    
+    while s<49:
+        if (l-s)%7 == 0:
+            start = s
+            break
+        s+=1
+    
     window = 7
-    start = 43
+    # start = 43
     end = start+window
     
     idx = []
@@ -199,7 +208,7 @@ def india_pred():
     # S0 = N-I0-R0
     S0 = Slist[-1]
     days = 180
-    t = np.linspace(tlist[-1],tlist[-1]+days,days)
+    t = np.linspace(tlist[-1],tlist[-1]+days-1,days)
     # Initial coditions vector
     y0 = S0,I0,R0
     gamma = df['gamma'].iloc[-1:].mean()
@@ -222,10 +231,10 @@ def india_pred():
         tdate.append(startdate+timedelta(i))
     
     for i in t:
-        td.append(startdate+timedelta(i+1))
+        td.append(startdate+timedelta(i))
         
     for i in trange:
-        ta.append(startdate+timedelta(i+1))
+        ta.append(startdate+timedelta(i))
     
     
     Total_cases_mod = list(map(lambda x : N-x, Slist)) 
