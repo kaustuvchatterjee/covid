@@ -165,7 +165,7 @@ if domain_opt == domain[4]:
     pfig0, pfig1 = india_pred()
     st.plotly_chart(pfig0)
     '''
-    Prediction based on estimated parameters of previous week.
+    Prediction based on estimated parameters of previous fortnight.
     '''
     st.plotly_chart(pfig1)
     st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
