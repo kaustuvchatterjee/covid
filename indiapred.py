@@ -67,7 +67,7 @@ def india_pred():
     l = len(total)
     s = 43
     
-    while s<49:
+    while s<=49:
         if (l-s)%7 == 0:
             start = s
             break
