@@ -254,11 +254,11 @@ def india_pred():
     pfig1.update_layout( xaxis_title='Date',
                         yaxis_title='No of Cases',
                         margin=dict(r=10, b=0, l=10, t=30),
-                        title={"text": "Covid-19 India Prediction",
+                        title={"text": "Covid-19 India Prediction - Cases",
                                "x": 0.5,"y": 0.97,"xanchor": "center","yanchor": "bottom",
                             "font": {'size': 14}
                         },
-                        legend=dict(x=.84,y=.98),
+                        legend=dict(x=.1,y=.98),
                         width=740, height=420,
                         template = 'seaborn',
                         annotations=[
@@ -274,5 +274,40 @@ def india_pred():
                             ]
                       )
   
+    
+    #Predicted Deaths
+    daily_deaths = np.diff(deaths)
+    cfr = daily_deaths/daily_cases
+    cfr = cfr[-14:].mean()
+    predicted_deaths = dc*cfr
 
-    return pfig0, pfig1
+    pfig2 = go.Figure()
+    pfig2.add_trace(go.Scatter(x=ta,y=daily_deaths, mode="markers", name="Actual"))
+    pfig2.add_trace(go.Scatter(x=td,y=predicted_deaths, mode="lines", name="Predicted"))    
+
+
+    pfig2.update_layout( xaxis_title='Date',
+                        yaxis_title='No of Deaths',
+                        margin=dict(r=10, b=0, l=10, t=30),
+                        title={"text": "Covid-19 India Prediction - Deaths",
+                               "x": 0.5,"y": 0.97,"xanchor": "center","yanchor": "bottom",
+                            "font": {'size': 14}
+                        },
+                        legend=dict(x=.1,y=.98),
+                        width=740, height=420,
+                        template = 'seaborn',
+                        annotations=[
+                            dict(
+                                x=0.97,
+                                y=0.03,
+                                xref="paper",
+                                yref="paper",
+                                text="Kaustuv",
+                                ax=0,
+                                ay=0
+                                )
+                            ]
+                      )
+
+    
+    return pfig0, pfig1, pfig2
