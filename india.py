@@ -6,7 +6,7 @@ Created on Mon Dec 21 11:53:34 2020
 @author: kaustuv
 """
 # Import Libraries
-import streamlit as st
+# import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -199,4 +199,23 @@ def create_indfigs():
                           text = txt2.format(a=grD[-1]),
                           xref='paper',yref='paper',
                           showarrow=False)    
-    return ifig0, ifig1, ifig2
+    
+    # Calculate CFR
+    cfr = data['dailydeaths'][148:]*100/data['dailycases'][148:]
+    cfrT = savgol_filter(cfr,7,1)
+    
+    ifig3 = go.Figure()
+    ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfr, mode="lines", name="CFR",line={'dash': 'solid', 'color': 'blue'}))
+    ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfrT, mode="lines", name="CFR Trend",line={'dash': 'solid', 'color': 'red'}))
+    
+    ifig3.update_yaxes(range=[0, 5])
+    ifig3.update_layout(title_text = 'Covid-19 - India - Case Fatality Rate',
+                    xaxis_title='Date',
+                    yaxis_title='Case Fatality Rate (%)',
+                    width = 740, height=480,
+                    margin=dict(r=20, b=10, l=10, t=30),
+                    showlegend = False,
+                    template = 'seaborn'
+                    )
+    
+    return ifig0, ifig1, ifig2, ifig3

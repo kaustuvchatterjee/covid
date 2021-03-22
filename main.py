@@ -71,11 +71,12 @@ if domain_opt == domain[1]:
     '''
     # India
     '''
-    ifig0, ifig1, ifig2 = create_indfigs()
+    ifig0, ifig1, ifig2, ifig3 = create_indfigs()
     
     choices = ['Cases & Deaths',
                'Morbidity & Mortality Rates',
-               'Growth Rates']
+               'Growth Rates',
+               'Case Fatality Rate']
     
     option = st.sidebar.selectbox('Select Chart:',choices)
     if option == choices[0]:
@@ -86,6 +87,9 @@ if domain_opt == domain[1]:
         st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
     if option == choices[2]:
         st.plotly_chart(ifig2)
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+    if option == choices[3]:
+        st.plotly_chart(ifig3)
         st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
 
 if domain_opt==domain[2]:
