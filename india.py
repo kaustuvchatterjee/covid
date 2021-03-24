@@ -205,7 +205,7 @@ def create_indfigs():
     cfrT = savgol_filter(cfr,7,1)
     
     ifig3 = go.Figure()
-    ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfr, mode="lines", name="CFR",line={'dash': 'solid', 'color': 'blue'}))
+    ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfr, mode="lines", name="CFR",line={'dash': 'dot', 'color': 'teal'}))
     ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfrT, mode="lines", name="CFR Trend",line={'dash': 'solid', 'color': 'red'}))
     
     ifig3.update_yaxes(range=[0, 5])
