@@ -237,13 +237,13 @@ def india_pred():
     
     
     for i in tlist:
-        tdate.append(startdate+timedelta(i))
+        tdate.append(startdate+timedelta(i+1))
     
     for i in t:
         td.append(startdate+timedelta(i))
         
     for i in trange:
-        ta.append(startdate+timedelta(i))
+        ta.append(startdate+timedelta(i+1))
     
     
     Total_cases_mod = list(map(lambda x : N-x, Slist)) 
