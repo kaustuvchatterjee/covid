@@ -24,6 +24,8 @@ def load_data():
     india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
       axis='columns', inplace=True)
     total=india_cdata.values.tolist()[0]
+    if total[-1]-total[-2]<=0:
+        total = total[:-1]
     
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
     data = pd.read_csv(url)
@@ -32,6 +34,8 @@ def load_data():
     india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
       axis='columns', inplace=True)
     deaths=india_cdata.values.tolist()[0]
+    if deaths[-1]-deaths[-2]<=0:
+        deaths = deaths[:-1]
     
 #    popData2019 = 1366417756
     popData2019 = 1380004385

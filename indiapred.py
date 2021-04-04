@@ -61,6 +61,15 @@ total,deaths,recovered = load_inddata()
 
 def india_pred():
     total,deaths,recovered = load_inddata()
+    
+    # Check for zero at last record
+    if total[-1]-total[-2] <= 0:
+        total = total[:-1]
+    if deaths[-1]-deaths[-2] <= 0:
+        deaths = deaths[:-1]
+    if recovered[-1]-recovered[-2] <= 0:
+        recovered = recovered[:-1]
+    
     RR=[x+y for x, y in zip(deaths, recovered)]
     II=[x-y for x, y in zip(total, RR)]
     
