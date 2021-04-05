@@ -6,7 +6,7 @@ Created on Tue Dec  1 15:44:11 2020
 @author: kaustuv
 """
 # Import Libraries
-import streamlit as st
+# import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -148,7 +148,7 @@ def india_pred():
     pfig0.update_layout( xaxis_title='Date',
                         #yaxis_title='Deaths',
                         width=740, height=320,
-                        margin=dict(r=10, b=10, l=10, t=30),
+                        margin=dict(r=10, b=10, l=10, t=100),
                         template = 'seaborn',
                         showlegend=False,
                         )
@@ -262,7 +262,7 @@ def india_pred():
     
     pfig1.update_layout( xaxis_title='Date',
                         yaxis_title='No of Cases',
-                        margin=dict(r=10, b=0, l=10, t=30),
+                        margin=dict(r=10, b=0, l=10, t=100),
                         title={"text": "Covid-19 India Prediction - Cases",
                                "x": 0.5,"y": 0.97,"xanchor": "center","yanchor": "bottom",
                             "font": {'size': 14}
@@ -297,7 +297,7 @@ def india_pred():
 
     pfig2.update_layout( xaxis_title='Date',
                         yaxis_title='No of Deaths',
-                        margin=dict(r=10, b=0, l=10, t=30),
+                        margin=dict(r=10, b=0, l=10, t=100),
                         title={"text": "Covid-19 India Prediction - Deaths",
                                "x": 0.5,"y": 0.97,"xanchor": "center","yanchor": "bottom",
                             "font": {'size': 14}

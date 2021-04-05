@@ -189,7 +189,7 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
                     width = 740, height=480,
-                    margin=dict(r=20, b=10, l=10, t=30),
+                    margin=dict(r=20, b=10, l=10, t=100),
                     showlegend = False,
                     template = 'seaborn'
                     )
@@ -217,7 +217,7 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Case Fatality Rate (%)',
                     width = 740, height=480,
-                    margin=dict(r=20, b=10, l=10, t=30),
+                    margin=dict(r=20, b=10, l=10, t=100),
                     showlegend = False,
                     template = 'seaborn'
                     )
