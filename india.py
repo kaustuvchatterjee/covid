@@ -18,7 +18,7 @@ from scipy.signal import savgol_filter
 def load_data():
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     data = pd.read_csv(url)
-    data.head()
+    # data.head()
      # Filter data for India
     india_cdata = data.loc[data['Country/Region']=='India']
     india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
@@ -84,9 +84,9 @@ def create_indfigs():
     ifig1.add_trace(go.Scatter(x=data['Date'], y=data['dpc'],name='Cases per million',line_color='blue'),row=1, col=1)
     ifig1.add_trace(go.Scatter(x=data['Date'], y=data['dpm'], name='Deaths per million',line_color='blue'),row=2, col=1)
     ifig1.update_layout(title={"text": "Covid-19 - India - Morbidity & Mortality",
-                               "x": 0.5,"y": 0.95,"xanchor": "center","yanchor": "bottom"},
+                               "x": 0.5,"y": 0.9,"xanchor": "center","yanchor": "bottom"},
                         width = 740, height=480,
-                        margin=dict(r=20, b=10, l=10, t=60),
+                        margin=dict(r=20, b=10, l=10, t=100),
                         showlegend=False,
                         template='seaborn'
                         )
@@ -189,7 +189,7 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
                     width = 740, height=480,
-                    margin=dict(r=20, b=10, l=10, t=60),
+                    margin=dict(r=20, b=10, l=10, t=100),
                     showlegend = False,
                     template = 'seaborn'
                     )
@@ -212,12 +212,12 @@ def create_indfigs():
     ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfr, mode="lines", name="CFR",line={'dash': 'dot', 'color': 'teal'}))
     ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfrT, mode="lines", name="CFR Trend",line={'dash': 'solid', 'color': 'red'}))
     
-    ifig3.update_yaxes(range=[0, 5])
+    ifig3.update_yaxes(range=[0, 3])
     ifig3.update_layout(title_text = 'Covid-19 - India - Case Fatality Rate',
                     xaxis_title='Date',
                     yaxis_title='Case Fatality Rate (%)',
                     width = 740, height=480,
-                    margin=dict(r=20, b=10, l=10, t=60),
+                    margin=dict(r=20, b=10, l=10, t=100),
                     showlegend = False,
                     template = 'seaborn'
                     )

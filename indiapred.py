@@ -30,7 +30,7 @@ def sir(y,t,N,beta, gamma):
 def load_inddata():
     url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
     data = pd.read_csv(url)
-    data.head()
+    # data.head()
      # Filter data for India
     india_df = data.loc[data['Country/Region']=='India']
     india_df.drop(['Province/State','Country/Region','Lat','Long'],
@@ -132,7 +132,7 @@ def india_pred():
     # df =df.drop([0,1,2,3])
     df.drop(df[df['Rt'] > 2.65].index, inplace = True) 
     df.reset_index(drop=True)
-    df.head()
+    # df.head()
     
     # Plots
     pfig0 = make_subplots(rows=1, cols=2,subplot_titles=('Beta vs Gamma', "R(t)"))
