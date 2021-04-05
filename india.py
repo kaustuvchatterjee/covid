@@ -70,9 +70,9 @@ def create_indfigs():
     ifig0.add_trace(go.Scatter(x=data['Date'], y=data['cumdeaths'], name='Total Deaths',line_color='blue'),row=2, col=2)
 
     ifig0.update_layout(title={"text": "Covid-19 - India - Cases & Deaths",
-                               "x": 0.5,"y": 0.95,"xanchor": "center","yanchor": "bottom"},
+                               "x": 0.5,"y": 0.9,"xanchor": "center","yanchor": "bottom"},
                         width = 740, height=480,
-                        margin=dict(r=20, b=10, l=10, t=60),
+                        margin=dict(r=20, b=10, l=10, t=100),
                         showlegend=False,
                         template='seaborn',
                         xaxis_title='Date',
@@ -189,7 +189,7 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Growth rate (%)',
                     width = 740, height=480,
-                    margin=dict(r=20, b=10, l=10, t=100),
+                    margin=dict(r=20, b=10, l=10, t=60),
                     showlegend = False,
                     template = 'seaborn'
                     )
@@ -217,7 +217,7 @@ def create_indfigs():
                     xaxis_title='Date',
                     yaxis_title='Case Fatality Rate (%)',
                     width = 740, height=480,
-                    margin=dict(r=20, b=10, l=10, t=100),
+                    margin=dict(r=20, b=10, l=10, t=60),
                     showlegend = False,
                     template = 'seaborn'
                     )

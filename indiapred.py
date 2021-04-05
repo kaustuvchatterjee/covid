@@ -148,7 +148,7 @@ def india_pred():
     pfig0.update_layout( xaxis_title='Date',
                         #yaxis_title='Deaths',
                         width=740, height=320,
-                        margin=dict(r=10, b=10, l=10, t=100),
+                        margin=dict(r=10, b=10, l=10, t=60),
                         template = 'seaborn',
                         showlegend=False,
                         )
@@ -262,9 +262,9 @@ def india_pred():
     
     pfig1.update_layout( xaxis_title='Date',
                         yaxis_title='No of Cases',
-                        margin=dict(r=10, b=0, l=10, t=100),
+                        margin=dict(r=10, b=0, l=10, t=60),
                         title={"text": "Covid-19 India Prediction - Cases",
-                               "x": 0.5,"y": 0.97,"xanchor": "center","yanchor": "bottom",
+                               "x": 0.5,"y": 0.9,"xanchor": "center","yanchor": "bottom",
                             "font": {'size': 14}
                         },
                         legend=dict(x=.1,y=.98),
@@ -297,9 +297,9 @@ def india_pred():
 
     pfig2.update_layout( xaxis_title='Date',
                         yaxis_title='No of Deaths',
-                        margin=dict(r=10, b=0, l=10, t=100),
+                        margin=dict(r=10, b=0, l=10, t=60),
                         title={"text": "Covid-19 India Prediction - Deaths",
-                               "x": 0.5,"y": 0.97,"xanchor": "center","yanchor": "bottom",
+                               "x": 0.5,"y": 0.9,"xanchor": "center","yanchor": "bottom",
                             "font": {'size': 14}
                         },
                         legend=dict(x=.1,y=.98),
