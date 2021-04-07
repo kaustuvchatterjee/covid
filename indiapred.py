@@ -13,6 +13,7 @@ from plotly.subplots import make_subplots
 import numpy as np
 import scipy.integrate as spi
 from scipy.signal import savgol_filter
+from scipy.signal import argrelextrema
 from datetime import datetime, timedelta
 
 #---------------------------------------------------------------------
@@ -134,38 +135,11 @@ def india_pred():
     df.reset_index(drop=True)
     # df.head()
     
-    # Plots
-    pfig0 = make_subplots(rows=1, cols=2,subplot_titles=('Beta vs Gamma', "R(t)"))
-    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['gamma'].round(3),line_color='blue',name='Gamma'),row=1, col=1)
-    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['beta'].round(3),line_color='red',name='Beta'),row=1, col=1)
-    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['Rt'].round(3),line_color='blue',name='R(t)'),row=1, col=2)
+    rt = np.array(rtlist)
+    max_rt = argrelextrema(rt, np.greater)[-1]
+    print(max_rt)
     
-    # Update xaxis properties
-    pfig0.update_xaxes(title_text="Date", row=1, col=1)
-    pfig0.update_xaxes(title_text="Date", row=1, col=2)
-    
-    
-    pfig0.update_layout( xaxis_title='Date',
-                        #yaxis_title='Deaths',
-                        width=740, height=320,
-                        margin=dict(r=10, b=10, l=10, t=60),
-                        template = 'seaborn',
-                        showlegend=False,
-                        )
-    
-    
-    
-    pfig0.add_shape(type="line",
-        x0= df['Date'].iloc[0], x1= df['Date'].iloc[-1],
-        y0= 1, y1= 1,
-        xref='x2',yref='y2',
-        line=dict(
-            color="black",
-            width=1,
-            dash="dashdot",
-        )
-    )
-    
+
     
     ## Model
     
@@ -253,6 +227,79 @@ def india_pred():
     
     C = list(map(lambda x : N-x, S))
     dc = np.diff(C)
+    
+    
+    ## Predicted R(t) Worst case
+    # Get Max R(t)
+    rt = np.array(df['Rt'])
+    max_rt_idx = argrelextrema(rt, np.greater)
+    max_rt_idx = max_rt_idx[0][-1]
+    max_rt_date = df['Date'].iloc[max_rt_idx]
+    max_rt = rt[max_rt_idx]
+    A = [x+y for x, y in zip(II[1:], RR[1:])]
+    A = np.array(A)
+    SS = N-A
+    idx = ta.index(max_rt_date)
+    
+    # Initial Conditions
+    SS0 = SS[idx]
+    II0 = II[idx+1]
+    RR0 = RR[idx+1]
+    
+    # get beta & gamma at max R(t)
+    β = df['beta'].iloc[max_rt_idx]
+    γ = df['gamma'].iloc[max_rt_idx]
+    
+    # Initial conditions vector
+    y0 = SS0, II0, RR0
+    # A grid of time points (in days)
+    d = 180
+    t = np.linspace(0, d, d)
+    # Integrate the SIR equations over the time grid, t.
+    ret = spi.odeint(sir, y0, t, args=(N, β, γ))
+    SP, IP, RP = ret.T
+    
+    stime = max_rt_date
+    tr = []
+    for i in t:
+        tr.append(stime+timedelta(i))
+    
+    Rt = (SP/SP[0])*(max_rt)
+
+    # Plots
+    pfig0 = make_subplots(rows=1, cols=2,subplot_titles=('Beta vs Gamma', "R(t)"))
+    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['gamma'].round(3),line_color='blue',name='Gamma'),row=1, col=1)
+    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['beta'].round(3),line_color='red',name='Beta'),row=1, col=1)
+    pfig0.add_trace(go.Scatter(x=df['Date'], y=df['Rt'].round(3),line_color='blue',name='R(t)'),row=1, col=2)
+    pfig0.add_trace(go.Scatter(x=[df['Date'].iloc[max_rt_idx]], y=[df['Rt'].iloc[max_rt_idx]]),row=1, col=2)
+    pfig0.add_trace(go.Scatter(x=tr, y=Rt,line_color='red',name='Pred R(t)',mode="lines",line=dict(dash= "dashdot")),row=1, col=2)
+    
+    # Update xaxis properties
+    pfig0.update_xaxes(title_text="Date", row=1, col=1)
+    pfig0.update_xaxes(title_text="Date", row=1, col=2)
+    
+    
+    pfig0.update_layout( xaxis_title='Date',
+                        #yaxis_title='Deaths',
+                        width=740, height=320,
+                        margin=dict(r=10, b=10, l=10, t=60),
+                        template = 'seaborn',
+                        showlegend=False,
+                        )
+    
+    
+    
+    pfig0.add_shape(type="line",
+        x0= df['Date'].iloc[0], x1= tr[-1],
+        y0= 1, y1= 1,
+        xref='x2',yref='y2',
+        line=dict(
+            color="black",
+            width=1,
+            dash="dashdot",
+        )
+    )
+    
     
     pfig1 = go.Figure()
     pfig1.add_trace(go.Scatter(x=ta,y=daily_cases, mode="markers", name="Actual"))
