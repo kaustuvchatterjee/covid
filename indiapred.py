@@ -227,7 +227,7 @@ def india_pred():
     ## Predicted R(t) Worst case
     # Get Max R(t)
     rt = np.array(df['Rt'])
-    max_rt_idx = find_peaks(rt,height=1.8,distance=14)
+    max_rt_idx = find_peaks(rt, distance=3,height=1.5)
     max_rt_idx = max_rt_idx[0][-1]
     max_rt_date = df['Date'].iloc[max_rt_idx]
     max_rt = rt[max_rt_idx]
