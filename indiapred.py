@@ -13,7 +13,7 @@ from plotly.subplots import make_subplots
 import numpy as np
 import scipy.integrate as spi
 from scipy.signal import savgol_filter
-from scipy.signal import argrelextrema
+from scipy.signal import find_peaks
 from datetime import datetime, timedelta
 
 #---------------------------------------------------------------------
@@ -135,12 +135,7 @@ def india_pred():
     df.reset_index(drop=True)
     # df.head()
     
-    rt = np.array(rtlist)
-    max_rt = argrelextrema(rt, np.greater)[-1]
-    print(max_rt)
-    
-
-    
+   
     ## Model
     
     # Global Variables
@@ -232,7 +227,7 @@ def india_pred():
     ## Predicted R(t) Worst case
     # Get Max R(t)
     rt = np.array(df['Rt'])
-    max_rt_idx = argrelextrema(rt, np.greater)
+    max_rt_idx = find_peaks(rt,height=1.8,distance=14)
     max_rt_idx = max_rt_idx[0][-1]
     max_rt_date = df['Date'].iloc[max_rt_idx]
     max_rt = rt[max_rt_idx]
