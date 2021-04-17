@@ -76,7 +76,7 @@ if domain_opt == domain[1]:
     choices = ['Cases & Deaths',
                'Morbidity & Mortality Rates',
                'Growth Rates',
-               'Case Fatality Rate']
+               'Case Fatality Ratio']
     
     option = st.sidebar.selectbox('Select Chart:',choices)
     if option == choices[0]:
@@ -91,7 +91,10 @@ if domain_opt == domain[1]:
     if option == choices[3]:
         st.plotly_chart(ifig3)
         st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
-
+        st.text('CFR calculated using following formula -')
+        st.text('CFR = Deaths*100/(Deaths+Recovered)')
+        st.text('Ref: Estimating Mortality from Covid-19, A Scientific Brief. WHO. 04 August 2020.')    
+        
 if domain_opt==domain[2]:
     '''
     ## India - States

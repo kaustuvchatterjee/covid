@@ -36,12 +36,22 @@ def load_data():
     deaths=india_cdata.values.tolist()[0]
     if deaths[-1]-deaths[-2]<=0:
         deaths = deaths[:-1]
+
+    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+    data = pd.read_csv(url)
+    # Filter data for India
+    india_cdata = data.loc[data['Country/Region']=='India']
+    india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
+      axis='columns', inplace=True)
+    recovered=india_cdata.values.tolist()[0]
+    if recovered[-1]-recovered[-2]<=0:
+        recovered = recovered[:-1]
     
 #    popData2019 = 1366417756
     popData2019 = 1380004385
-    cdata = pd.DataFrame([total,deaths]).transpose()
+    cdata = pd.DataFrame([total,deaths,recovered]).transpose()
     cdata["date_id"] = cdata.index
-    cdata.columns=["cumcases", "cumdeaths","date_id"]
+    cdata.columns=["cumcases", "cumdeaths","cumrecovered","date_id"]
     #cdata.rename(columns={0: "cumcases",1: "cumdeaths"},inplace=True)
     startdate = pd.Timestamp('2020-01-22')
     cdata['time_added'] = pd.to_timedelta(cdata['date_id'],'d')
@@ -50,8 +60,10 @@ def load_data():
     
     dailycases = cdata.cumcases.diff()
     dailydeaths = cdata.cumdeaths.diff()
+    dailyrecovered = cdata.cumrecovered.diff()
     cdata["dailycases"] = dailycases
     cdata["dailydeaths"] = dailydeaths
+    cdata["dailyrecovered"] = dailyrecovered
     
     cdata['dpm'] = round(cdata['cumdeaths']*1e6/popData2019,2)
     cdata['dpc'] = round(cdata['cumcases']*1e6/popData2019,2)
@@ -205,7 +217,7 @@ def create_indfigs():
                           showarrow=False)    
     
     # Calculate CFR
-    cfr = data['dailydeaths'][148:]*100/data['dailycases'][148:]
+    cfr = data['dailydeaths'][148:]*100/(data['dailydeaths'][148:]+data['dailyrecovered'][148:])
     cfrT = savgol_filter(cfr,7,1)
     
     ifig3 = go.Figure()
@@ -213,9 +225,9 @@ def create_indfigs():
     ifig3.add_trace(go.Scatter(x=data['Date'][148:],y=cfrT, mode="lines", name="CFR Trend",line={'dash': 'solid', 'color': 'red'}))
     
     ifig3.update_yaxes(range=[0, 3])
-    ifig3.update_layout(title_text = 'Covid-19 - India - Case Fatality Rate',
+    ifig3.update_layout(title_text = 'Covid-19 - India - Case Fatality Ratio',
                     xaxis_title='Date',
-                    yaxis_title='Case Fatality Rate (%)',
+                    yaxis_title='Case Fatality Ratio (%)',
                     width = 740, height=480,
                     margin=dict(r=20, b=10, l=10, t=100),
                     showlegend = False,
