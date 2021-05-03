@@ -176,7 +176,7 @@ if domain_opt == domain[4]:
         st.plotly_chart(pfig0)
         
         r'''
-        Prediction based on estimated parameters of previous 14 days.
+        Prediction based on estimated parameters of previous 7 days.
         '''
         
         st.plotly_chart(pfig1)

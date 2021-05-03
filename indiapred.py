@@ -215,12 +215,12 @@ def india_pred():
         ta.append(startdate+timedelta(i+1))
     
     
-    Total_cases_mod = list(map(lambda x : N-x, Slist)) 
+    Total_cases_mod = list(map(lambda x : N-x, Slist))
     Daily_cases_mod = np.diff(Total_cases_mod)
     daily_cases = np.diff(total)
     Daily_cases_mod = savgol_filter(Daily_cases_mod, 21, 1) 
     
-    C = list(map(lambda x : N-x, S))
+    C = list(map(lambda x : N-x, S[6:]))
     dc = np.diff(C)
     
     
