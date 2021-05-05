@@ -189,23 +189,24 @@ def india_pred():
     t = np.linspace(tlist[-1],tlist[-1]+days-1,days)
     # Initial coditions vector
     y0 = S0,I0,R0
-    gamma = df['gamma'].iloc[-2:].mean()
-    beta = df['beta'].iloc[-2:].mean()
+    # gamma = df['gamma'].iloc[-2:].mean()
+    # beta = df['beta'].iloc[-2:].mean()
     
     # Predict gamma, beta 1 week ahead
-    gamma = df['gamma'].iloc[-1:].mean()
-    beta = df['beta'].iloc[-1:].mean()
+    gamma = df['gamma'].iloc[-1]
+    beta = df['beta'].iloc[-1]
     
-    x=[0,1,2,3]
-    g = df['gamma'].iloc[-4:]
-    z = np.polyfit(x,g,1)
-    p = np.poly1d(z)
-    gamma = p(4)
+    # n=3.4
+    # x=[0,1,2,3]
+    # g = df['gamma'].iloc[-4:]
+    # z = np.polyfit(x,g,2)
+    # p = np.poly1d(z)
+    # gamma = p(n)
 
-    b = df['beta'].iloc[-4:]
-    z = np.polyfit(x,g,1)
-    p = np.poly1d(z)
-    beta = p(4)    
+    # b = df['beta'].iloc[-4:]
+    # z = np.polyfit(x,b,2)
+    # p = np.poly1d(z)
+    # beta = p(n)    
     
     
     ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
@@ -225,7 +226,7 @@ def india_pred():
         tdate.append(startdate+timedelta(i+1))
     
     for i in t:
-        td.append(startdate+timedelta(i))
+        td.append(startdate+timedelta(i-8))
         
     for i in trange:
         ta.append(startdate+timedelta(i+1))
@@ -236,7 +237,7 @@ def india_pred():
     daily_cases = np.diff(total)
     Daily_cases_mod = savgol_filter(Daily_cases_mod, 21, 1) 
     
-    C = list(map(lambda x : N-x, S[6:]))
+    C = list(map(lambda x : N-x, S))
     dc = np.diff(C)
     
     
