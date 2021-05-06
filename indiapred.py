@@ -189,8 +189,8 @@ def india_pred():
     # beta = df['beta'].iloc[-2:].mean()
     
     # Predict gamma, beta 1 week ahead
-    gamma = df['gamma'].iloc[-1]
-    beta = df['beta'].iloc[-1]
+   # gamma = df['gamma'].iloc[-1]
+    #beta = df['beta'].iloc[-1]
     
     # n=3.4
     # x=[0,1,2,3]
@@ -211,7 +211,7 @@ def india_pred():
     startdate = datetime.strptime('2020-01-22','%Y-%m-%d')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
-    trange
+    #trange
     
     tdate = []
     td = []
