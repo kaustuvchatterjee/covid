@@ -148,13 +148,14 @@ def india_pred():
     Rmod = []
     
     #Initial Conditions
-    I0 = II[timestops[0]]
-    R0 = RR[timestops[0]]
-    S0 = N-I0-R0
+
     days = window
-    t = np.linspace(0,days,days)
+    t = np.linspace(0,days-1,days)
     
     for tx in timestops:
+        I0 = II[tx]
+        R0 = RR[tx]
+        S0 = N-I0-R0
       
         # Initial coditions vector
         y0 = S0,I0,R0
@@ -164,20 +165,15 @@ def india_pred():
         S,I,R = ret.T
     
         tt = list(map(lambda x : x + tx, t)) 
-        I = I.tolist()
-        tdate.append(tt[1:])
-        Imod.append(I[1:])
-        Smod.append(S[1:])
-        Rmod.append(R[1:])
+        tdate.append(tt)
+        Imod.append(I)
+        Smod.append(S)
+        Rmod.append(R)
         tlist = [val for sublist in tdate for val in sublist]
         Ilist = [val for sublist in Imod for val in sublist]
         Slist = [val for sublist in Smod for val in sublist]
         Rlist = [val for sublist in Rmod for val in sublist]
         
-        #reset initial conditions
-        I0 = I[-1]
-        R0 = R[-1]
-        S0 = S[-1]
     
     ## Prediction
     #Initial Conditions
@@ -223,18 +219,18 @@ def india_pred():
     
     
     for i in tlist:
-        tdate.append(startdate+timedelta(i+1))
+        tdate.append(startdate+timedelta(i))
     
     for i in t:
-        td.append(startdate+timedelta(i-8))
+        td.append(startdate+timedelta(i))
         
     for i in trange:
-        ta.append(startdate+timedelta(i+1))
+        ta.append(startdate+timedelta(i))
     
     
     Total_cases_mod = list(map(lambda x : N-x, Slist))
-    Daily_cases_mod = np.diff(Total_cases_mod)
-    daily_cases = np.diff(total)
+    Daily_cases_mod = np.ediff1d(Total_cases_mod)
+    daily_cases = np.ediff1d(total)
     Daily_cases_mod = savgol_filter(Daily_cases_mod, 21, 1) 
     
     C = list(map(lambda x : N-x, S))
