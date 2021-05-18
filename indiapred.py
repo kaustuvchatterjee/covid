@@ -16,6 +16,7 @@ from scipy.signal import savgol_filter
 from scipy.signal import find_peaks
 from datetime import datetime, timedelta
 
+
 #---------------------------------------------------------------------
 # India - Prediction
 #--------------------------------------------------------------------
