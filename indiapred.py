@@ -177,10 +177,10 @@ def india_pred():
     
     ## Prediction
     #Initial Conditions
-    I0 = Ilist[-1]
-    R0 = Rlist[-1]
+    I0 = Ilist[-7]
+    R0 = Rlist[-7]
     # S0 = N-I0-R0
-    S0 = Slist[-1]
+    S0 = Slist[-7]
     days = 180
     t = np.linspace(tlist[-1],tlist[-1]+days-1,days)
     # Initial coditions vector
@@ -208,7 +208,7 @@ def india_pred():
     ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
     S,I,R = ret.T
     
-    startdate = datetime.strptime('2020-01-22','%Y-%m-%d')
+    startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
@@ -219,7 +219,7 @@ def india_pred():
     
     
     for i in tlist:
-        tdate.append(startdate+timedelta(i))
+        tdate.append(startdate+timedelta(i)) ###
     
     for i in t:
         td.append(startdate+timedelta(i))
@@ -346,9 +346,11 @@ def india_pred():
     cfr = daily_deaths/daily_cases
     cfr = cfr[-14:].mean()
     predicted_deaths = dc*cfr
+    smooth_deaths = savgol_filter(daily_deaths, 21, 1)
 
     pfig2 = go.Figure()
     pfig2.add_trace(go.Scatter(x=ta,y=daily_deaths, mode="markers", name="Actual"))
+    pfig2.add_trace(go.Scatter(x=ta,y=smooth_deaths, mode="lines", name="Smoothed"))
     pfig2.add_trace(go.Scatter(x=td,y=predicted_deaths, mode="lines", name="Predicted"))    
 
 
