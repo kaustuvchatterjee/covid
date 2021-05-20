@@ -315,7 +315,7 @@ def india_pred():
     pfig1 = go.Figure()
     pfig1.add_trace(go.Scatter(x=ta,y=daily_cases, mode="markers", name="Actual"))
     pfig1.add_trace(go.Scatter(x=tdate,y=Daily_cases_mod, mode="lines", name="Model"))
-    pfig1.add_trace(go.Scatter(x=td,y=dc, mode="lines", name="Predicted"))
+    pfig1.add_trace(go.Scatter(x=td[:-1],y=dc[1:], mode="lines", name="Predicted"))
     
     
     pfig1.update_layout( xaxis_title='Date',
