@@ -36,7 +36,6 @@ cdata['Smoothened']=smooth
     
 
 
-
 def create_mumfigs():
 
     fig = go.Figure()
