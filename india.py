@@ -12,6 +12,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 from scipy.signal import savgol_filter
+from scipy.optimize import curve_fit
+import streamlit as st
 
 # Read data from JHU website
 # @st.cache
@@ -163,14 +165,19 @@ def create_indfigs():
 #    gr = gr/7
     grC = savgol_filter(gr,15,1)
     
+    def func(x, a, b, c): ###
+        return a * np.exp(-b * x) + c
     
-    
-    t = np.array(range(start,end))
+    t = np.array(range(0,14))
     y = grC[start:end]
-    a,b = np.polyfit(t,y,1)
+    # a,b = np.polyfit(t,y,1)
+    popt, pcov = curve_fit(func, t, y, maxfev = 2000)
     
-    t = np.array(range(start,end+100))
-    ypC = a*t+b
+    
+    t = np.array(range(0,14+100))
+    # ypC = a*t+b
+    ypC = func(t, *popt)
+    
     
     
     g1 = np.array(data['cumdeaths'][t0:].values.tolist())
@@ -182,12 +189,14 @@ def create_indfigs():
     end = len(dates)
     start = end - 14
     
-    t = np.array(range(start,end))
+    t = np.array(range(0,14))
     y = grD[start:end]
-    a,b = np.polyfit(t,y,1)
+    # a,b = np.polyfit(t,y,1)
+    popt, pcov = curve_fit(func, t, y, maxfev = 2000)
     
-    t = np.array(range(start,end+100))
-    ypD = a*t+b
+    t = np.array(range(0,14+100))
+    # ypD = a*t+b
+    ypD = func(t, *popt)
     
     ifig2 = go.Figure()
     
