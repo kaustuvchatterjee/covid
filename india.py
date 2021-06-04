@@ -171,12 +171,14 @@ def create_indfigs():
     t = np.array(range(0,14))
     y = grC[start:end]
     # a,b = np.polyfit(t,y,1)
-    popt, pcov = curve_fit(func, t, y, maxfev = 2000)
+    z = np.polyfit(t,y,2)
+    # popt, pcov = curve_fit(func, t, y, maxfev = 2000)
     
     
     t = np.array(range(0,14+100))
     # ypC = a*t+b
-    ypC = func(t, *popt)
+    ypC = z[0]*t*t+z[1]*t+z[2]
+    # ypC = func(t, *popt)
     
     
     
@@ -191,12 +193,13 @@ def create_indfigs():
     
     t = np.array(range(0,14))
     y = grD[start:end]
-    # a,b = np.polyfit(t,y,1)
-    popt, pcov = curve_fit(func, t, y, maxfev = 2000)
+    z = np.polyfit(t,y,2)
+    # popt, pcov = curve_fit(func, t, y, maxfev = 2000)
     
     t = np.array(range(0,14+100))
     # ypD = a*t+b
-    ypD = func(t, *popt)
+    ypD = z[0]*t*t+z[1]*t+z[2]
+    # ypD = func(t, *popt)
     
     ifig2 = go.Figure()
     
