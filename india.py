@@ -205,6 +205,7 @@ def create_indfigs():
     ix = np.where(ypD <= 0)[0][0]
     t=t[:ix]
     ypD=ypD[:ix]
+    
     # ypD = func(t, *popt)
     
     ifig2 = go.Figure()
