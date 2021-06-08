@@ -178,6 +178,9 @@ def create_indfigs():
     t = np.array(range(0,14+100))
     # ypC = a*t+b
     ypC = z[0]*t*t+z[1]*t+z[2]
+    ix = np.where(ypC <= 0)[0][0]
+    t=t[:ix]
+    ypC=ypC[:ix]
     # ypC = func(t, *popt)
     
     
@@ -199,6 +202,9 @@ def create_indfigs():
     t = np.array(range(0,14+100))
     # ypD = a*t+b
     ypD = z[0]*t*t+z[1]*t+z[2]
+    ix = np.where(ypD <= 0)[0][0]
+    t=t[:ix]
+    ypD=ypD[:ix]
     # ypD = func(t, *popt)
     
     ifig2 = go.Figure()
