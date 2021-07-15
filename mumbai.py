@@ -45,7 +45,7 @@ def create_mumfigs():
     fig.update_layout(title={"x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "bottom"},
                       title_text = 'Covid-19 - Mumbai - Daily Cases',
                        width = 740, height = 480,
-                       margin=dict(r=20, b=10, l=10, t=100),
+                       margin=dict(r=20, b=10, l=10, t=60),
                        template = 'plotly_white',
                        showlegend=False,
                         annotations=[
