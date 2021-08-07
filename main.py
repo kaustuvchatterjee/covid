@@ -168,24 +168,24 @@ if domain_opt == domain[4]:
     r'''
     ## India - Prediction
     '''
-    try:
-        pfig0, pfig1, pfig2 = india_pred()
-        r'''
-        Model based on SIR model with $$\beta$$ & $$\gamma$$ estimated piecewise over 7-day sliding window.
-        '''
-        st.plotly_chart(pfig0)
-        
-        r'''
-        Prediction based on estimated parameters of previous 7 days.
-        '''
-        
-        st.plotly_chart(pfig1)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
-        st.plotly_chart(pfig2)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')       
+#     try:
+    pfig0, pfig1, pfig2 = india_pred()
+    r'''
+    Model based on SIR model with $$\beta$$ & $$\gamma$$ estimated piecewise over 7-day sliding window.
+    '''
+    st.plotly_chart(pfig0)
+
+    r'''
+    Prediction based on estimated parameters of previous 7 days.
+    '''
+
+    st.plotly_chart(pfig1)
+    st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+    st.plotly_chart(pfig2)
+    st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')       
     
-    except:
-        st.text('Unable to load data! Please try after some time.')
+#     except:
+#         st.text('Unable to load data! Please try after some time.')
             
 
 
