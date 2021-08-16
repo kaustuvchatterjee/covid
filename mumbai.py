@@ -47,7 +47,7 @@ def create_mumfigs():
                       title_text = 'Covid-19 - Mumbai - Daily Cases',
                        width = 740, height = 480,
                        margin=dict(r=20, b=10, l=10, t=60),
-                       template = 'simple_white',
+                       template = 'plotly_white',
                        showlegend=False,
                         annotations=[
                             dict(
