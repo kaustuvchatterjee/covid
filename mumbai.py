@@ -39,7 +39,7 @@ cdata['Smoothened']=smooth
 
 def create_mumfigs():
 
-    fig = go.Figure(template="plotly_white")
+    fig = go.Figure()
     fig.add_trace(go.Scatter(x=cdata['Date'], y=cdata['Daily Cases'], mode='lines', name='Daily Cases',line={'dash': 'dot', 'color': 'cadetblue'}))
     fig.add_trace(go.Scatter(x=cdata['Date'], y=cdata['Smoothened'], mode='lines', name='Smoothened', line={'dash': 'solid', 'color': 'red'}))
     
