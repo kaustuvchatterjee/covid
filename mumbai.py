@@ -64,8 +64,8 @@ def create_mumfigs():
     min_x = cdata['Date'][0]
     max_x = '2021-07-31'
     fig.update_yaxes(title_text="No of Cases", range=(0,max_y))
-    fig.update_xaxes(title_text="Date", range=(min_x,max_x))
-    
+    #fig.update_xaxes(title_text="Date", range=(min_x,max_x))
+    fig.update_xaxes(title_text="Date")
 #    fig.update_layout(shapes=[
 #        dict(
 #          type = 'line',
