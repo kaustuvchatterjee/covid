@@ -81,16 +81,16 @@ if domain_opt == domain[1]:
     option = st.sidebar.selectbox('Select Chart:',choices)
     if option == choices[0]:
         st.plotly_chart(ifig0)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://api.covid19india.org/csv/latest/case_time_series.csv')
     if option == choices[1]:
         st.plotly_chart(ifig1)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://api.covid19india.org/csv/latest/case_time_series.csv')
     if option == choices[2]:
         st.plotly_chart(ifig2)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://api.covid19india.org/csv/latest/case_time_series.csv')
     if option == choices[3]:
         st.plotly_chart(ifig3)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://api.covid19india.org/csv/latest/case_time_series.csv')
         st.text('CFR calculated using following formula -')
         st.text('CFR = Deaths*100/(Deaths+Recovered)')
         st.text('Ref: Estimating Mortality from Covid-19, A Scientific Brief. WHO. 04 August 2020.')    
@@ -180,9 +180,9 @@ if domain_opt == domain[4]:
         '''
 
         st.plotly_chart(pfig1)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://api.covid19india.org/csv/latest/case_time_series.csv')
         st.plotly_chart(pfig2)
-        st.text('Data Source: JHU CSSE COVID-19 Data - https://github.com/CSSEGISandData/COVID-19')       
+        st.text('Data Source: JHU CSSE COVID-19 Data - https://api.covid19india.org/csv/latest/case_time_series.csv')       
     
     except:
         st.text('Unable to load data! Please try after some time.')
