@@ -30,30 +30,30 @@ def sir(y,t,N,beta, gamma):
 # Read data from JHU website
 # @st.cache
 def load_inddata():
-    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
-    data = pd.read_csv(url)
-    # data.head()
-     # Filter data for India
-    india_df = data.loc[data['Country/Region']=='India']
-    india_df.drop(['Province/State','Country/Region','Lat','Long'],
-      axis='columns', inplace=True)
-    total=india_df.values.tolist()[0]
+    # url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+    # data = pd.read_csv(url)
+    # # data.head()
+    #  # Filter data for India
+    # india_df = data.loc[data['Country/Region']=='India']
+    # india_df.drop(['Province/State','Country/Region','Lat','Long'],
+    #   axis='columns', inplace=True)
+    # total=india_df.values.tolist()[0]
     
-    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
-    data = pd.read_csv(url)
-    # Filter data for India
-    india_df = data.loc[data['Country/Region']=='India']
-    india_df.drop(['Province/State','Country/Region','Lat','Long'],
-      axis='columns', inplace=True)
-    deaths=india_df.values.tolist()[0]
+    # url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
+    # data = pd.read_csv(url)
+    # # Filter data for India
+    # india_df = data.loc[data['Country/Region']=='India']
+    # india_df.drop(['Province/State','Country/Region','Lat','Long'],
+    #   axis='columns', inplace=True)
+    # deaths=india_df.values.tolist()[0]
     
-    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
-    data = pd.read_csv(url)
-    # Filter data for India
-    india_df = data.loc[data['Country/Region']=='India']
-    india_df.drop(['Province/State','Country/Region','Lat','Long'],
-      axis='columns', inplace=True)
-    recovered=india_df.values.tolist()[0]
+    # url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+    # data = pd.read_csv(url)
+    # # Filter data for India
+    # india_df = data.loc[data['Country/Region']=='India']
+    # india_df.drop(['Province/State','Country/Region','Lat','Long'],
+    #   axis='columns', inplace=True)
+    # recovered=india_df.values.tolist()[0]
     
     #################
     url = 'https://api.covid19india.org/csv/latest/case_time_series.csv'
