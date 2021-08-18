@@ -55,6 +55,14 @@ def load_inddata():
       axis='columns', inplace=True)
     recovered=india_df.values.tolist()[0]
     
+    #################
+    url = 'https://api.covid19india.org/csv/latest/case_time_series.csv'
+    data = pd.read_csv(url)
+    total = data['Total Confirmed'].tolist()
+    deaths = data['Total Deceased'].tolist()
+    recovered = data['Total Recovered'].tolist()
+    #################
+    
     return total,deaths,recovered
 
 
@@ -74,9 +82,11 @@ def india_pred():
     II=[x-y for x, y in zip(total, RR)]
     
     l = len(total)
-    s = 43
+    # s = 43
+    s = 35
     
-    while s<=49:
+    # while s<=49:
+    while s<=41:
         if (l-s)%7 == 0:
             start = s
             break
@@ -125,7 +135,8 @@ def india_pred():
     df.columns=["date_id", "m", "gamma", "beta", "Rt"]
     df['Infectious Pd']=1/df['gamma']
     df['date_id']=df['date_id'].astype(int)
-    startdate = pd.Timestamp('2020-01-22')
+    # startdate = pd.Timestamp('2020-01-22')
+    startdate = pd.Timestamp('2020-01-30')
     df['time_added'] = pd.to_timedelta(df['date_id'],'d')
     df['Date'] = startdate+df['time_added']
     df.drop(['time_added'],axis='columns', inplace=True)
@@ -207,7 +218,8 @@ def india_pred():
     ret = spi.odeint(sir,y0,t,args=(N,beta,gamma))
     S,I,R = ret.T
     
-    startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
+    # startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
+    startdate = datetime.strptime('2020-01-31','%Y-%m-%d')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
