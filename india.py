@@ -18,36 +18,43 @@ import streamlit as st
 # Read data from JHU website
 # @st.cache
 def load_data():
-    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
-    data = pd.read_csv(url)
-    # data.head()
-     # Filter data for India
-    india_cdata = data.loc[data['Country/Region']=='India']
-    india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
-      axis='columns', inplace=True)
-    total=india_cdata.values.tolist()[0]
-    if total[-1]-total[-2]<=0:
-        total = total[:-1]
+    # url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+    # data = pd.read_csv(url)
+    # # data.head()
+    #  # Filter data for India
+    # india_cdata = data.loc[data['Country/Region']=='India']
+    # india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
+    #   axis='columns', inplace=True)
+    # total=india_cdata.values.tolist()[0]
+    # if total[-1]-total[-2]<=0:
+    #     total = total[:-1]
     
-    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
-    data = pd.read_csv(url)
-    # Filter data for India
-    india_cdata = data.loc[data['Country/Region']=='India']
-    india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
-      axis='columns', inplace=True)
-    deaths=india_cdata.values.tolist()[0]
-    if deaths[-1]-deaths[-2]<=0:
-        deaths = deaths[:-1]
+    # url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
+    # data = pd.read_csv(url)
+    # # Filter data for India
+    # india_cdata = data.loc[data['Country/Region']=='India']
+    # india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
+    #   axis='columns', inplace=True)
+    # deaths=india_cdata.values.tolist()[0]
+    # if deaths[-1]-deaths[-2]<=0:
+    #     deaths = deaths[:-1]
 
-    url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+    # url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv'
+    # data = pd.read_csv(url)
+    # # Filter data for India
+    # india_cdata = data.loc[data['Country/Region']=='India']
+    # india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
+    #   axis='columns', inplace=True)
+    # recovered=india_cdata.values.tolist()[0]
+    # if recovered[-1]-recovered[-2]<=0:
+    #     recovered = recovered[:-1]
+    
+    url = 'https://api.covid19india.org/csv/latest/case_time_series.csv'
     data = pd.read_csv(url)
-    # Filter data for India
-    india_cdata = data.loc[data['Country/Region']=='India']
-    india_cdata.drop(['Province/State','Country/Region','Lat','Long'],
-      axis='columns', inplace=True)
-    recovered=india_cdata.values.tolist()[0]
-    if recovered[-1]-recovered[-2]<=0:
-        recovered = recovered[:-1]
+    total = data['Total Confirmed'].tolist()
+    deaths = data['Total Deceased'].tolist()
+    recovered = data['Total Recovered'].tolist()    
+    
     
 #    popData2019 = 1366417756
     popData2019 = 1380004385
@@ -55,7 +62,7 @@ def load_data():
     cdata["date_id"] = cdata.index
     cdata.columns=["cumcases", "cumdeaths","cumrecovered","date_id"]
     #cdata.rename(columns={0: "cumcases",1: "cumdeaths"},inplace=True)
-    startdate = pd.Timestamp('2020-01-22')
+    startdate = pd.Timestamp('2020-01-30')
     cdata['time_added'] = pd.to_timedelta(cdata['date_id'],'d')
     cdata['Date'] = startdate+cdata['time_added']
     cdata.drop(['time_added'],axis='columns', inplace=True)
