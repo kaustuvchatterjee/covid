@@ -243,7 +243,7 @@ def create_distfigs():
                      hover_data=["dpm","prev"],
                      color_continuous_scale='RdYlGn_r',
                      log_x=True,
-                      opacity=.7
+                     opacity=.7
                      )
     
     dfig4.update_layout(title={"text":"Covid-19 District-wise Mortality Rate","x": 0.5, "y": 0.95, "xanchor": "center", "yanchor": "top"},
