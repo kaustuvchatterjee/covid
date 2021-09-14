@@ -66,7 +66,7 @@ def load_data():
     idx = sdf[sdf["total_deaths"]==0].index
     sdf.drop(idx, inplace = True)
     sdf = sdf.replace([np.inf, -np.inf],np.nan)
-    sdf.dropna()
+    sdf = sdf.dropna()
     sdf['censuscode'] = sdf['censuscode'].astype(int, errors='ignore')
     return sdf
 
