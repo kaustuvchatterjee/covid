@@ -75,9 +75,6 @@ def load_data():
     deaths = data['Deceased'].tolist()
     recovered = data['Recovered'].tolist()
     
-    return total,deaths,recovered
-
-
    
 #    popData2019 = 1366417756
     popData2019 = 1380004385
