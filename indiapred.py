@@ -56,7 +56,7 @@ def load_inddata():
     # recovered=india_df.values.tolist()[0]
     
     #################
-    url = 'https://api.covid19india.org/csv/latest/case_time_series.csv'
+    url = 'https://data.covid19india.org/csv/latest/case_time_series.csv'
     data = pd.read_csv(url)
     total = data['Total Confirmed'].tolist()
     deaths = data['Total Deceased'].tolist()
