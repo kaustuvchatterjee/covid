@@ -49,13 +49,36 @@ def load_data():
     # if recovered[-1]-recovered[-2]<=0:
     #     recovered = recovered[:-1]
     
-    url = 'https://api.covid19india.org/csv/latest/case_time_series.csv'
+    # url = 'https://api.covid19india.org/csv/latest/case_time_series.csv'
+    # data = pd.read_csv(url)
+    # total = data['Total Confirmed'].tolist()
+    # deaths = data['Total Deceased'].tolist()
+    # recovered = data['Total Recovered'].tolist()    
+    
+    url = 'https://data.covid19india.org/csv/latest/states.csv'
     data = pd.read_csv(url)
-    total = data['Total Confirmed'].tolist()
-    deaths = data['Total Deceased'].tolist()
-    recovered = data['Total Recovered'].tolist()    
+    data = data[data["State"]=="India"]
+    data["Date"] = pd.to_datetime(data['Date'])
+    
+    r = pd.date_range(start=data.Date.min(), end=data.Date.max())
+    data = data.set_index('Date').reindex(r).fillna(0.0).rename_axis('Date').reset_index()
     
     
+    for row in range(len(data)):
+        if data['State'][row] == 0.0:
+            data['Confirmed'].iloc[row] = data['Confirmed'].iloc[row-1]
+            data['Recovered'].iloc[row] = data['Recovered'].iloc[row-1]
+            data['Deceased'].iloc[row] = data['Deceased'].iloc[row-1]
+            data['State'].iloc[row] = 'India'
+    
+    total = data['Confirmed'].tolist()
+    deaths = data['Deceased'].tolist()
+    recovered = data['Recovered'].tolist()
+    
+    return total,deaths,recovered
+
+
+   
 #    popData2019 = 1366417756
     popData2019 = 1380004385
     cdata = pd.DataFrame([total,deaths,recovered]).transpose()
