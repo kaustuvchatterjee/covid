@@ -117,7 +117,16 @@ def load_inddata():
             data['deaths'].iloc[i+1] = (data['deaths'].iloc[i]+data['deaths'].iloc[i+2])/2
         if data['total'].iloc[i+1]<data['total'].iloc[i]:
             data['total'].iloc[i+1] = (data['total'].iloc[i]+data['total'].iloc[i+2])/2
-       
+
+    # Missing Dates
+    data = data.groupby(pd.Grouper(key='date',freq='D')).max().rename_axis('date').reset_index()
+    
+    for i in range(len(data)):
+        if np.isnan(data['active_cases'].iloc[i]):
+            data['active_cases'].iloc[i] = data['active_cases'][i-1]
+            data['cured'].iloc[i] = data['cured'][i-1]
+            data['deaths'].iloc[i] = data['deaths'][i-1]
+            data['total'].iloc[i] = data['total'][i-1]        
        
     total = data['total'].tolist()
     deaths = data['deaths'].tolist()
