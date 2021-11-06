@@ -55,27 +55,80 @@ def load_data():
     # deaths = data['Total Deceased'].tolist()
     # recovered = data['Total Recovered'].tolist()    
     
-    url = 'https://data.covid19india.org/csv/latest/states.csv'
-    data = pd.read_csv(url)
-    data = data[data["State"]=="India"]
-    data["Date"] = pd.to_datetime(data['Date'])
+    # url = 'https://data.covid19india.org/csv/latest/states.csv'
+    # data = pd.read_csv(url)
+    # data = data[data["State"]=="India"]
+    # data["Date"] = pd.to_datetime(data['Date'])
     
-    r = pd.date_range(start=data.Date.min(), end=data.Date.max())
-    data = data.set_index('Date').reindex(r).fillna(0.0).rename_axis('Date').reset_index()
+    # r = pd.date_range(start=data.Date.min(), end=data.Date.max())
+    # data = data.set_index('Date').reindex(r).fillna(0.0).rename_axis('Date').reset_index()
     
     
-    for row in range(len(data)):
-        if data['State'][row] == 0.0:
-            data['Confirmed'].iloc[row] = data['Confirmed'].iloc[row-1]
-            data['Recovered'].iloc[row] = data['Recovered'].iloc[row-1]
-            data['Deceased'].iloc[row] = data['Deceased'].iloc[row-1]
-            data['State'].iloc[row] = 'India'
+    # for row in range(len(data)):
+    #     if data['State'][row] == 0.0:
+    #         data['Confirmed'].iloc[row] = data['Confirmed'].iloc[row-1]
+    #         data['Recovered'].iloc[row] = data['Recovered'].iloc[row-1]
+    #         data['Deceased'].iloc[row] = data['Deceased'].iloc[row-1]
+    #         data['State'].iloc[row] = 'India'
     
-    total = data['Confirmed'].tolist()
-    deaths = data['Deceased'].tolist()
-    recovered = data['Recovered'].tolist()
+    # total = data['Confirmed'].tolist()
+    # deaths = data['Deceased'].tolist()
+    # recovered = data['Recovered'].tolist()
     
-   
+    url = 'https://raw.githubusercontent.com/datameet/covid19/master/data/all_totals.json'
+    data = pd.read_json(url)
+    df = pd.json_normalize(data.rows)
+    
+    date = []
+    active_cases = []
+    cured = []
+    deaths = []
+    total = []
+    
+    
+    for i in range(len(df)):
+        if df.key[i][1] == 'active_cases':
+            date.append(df.key[i][0])
+            active_cases.append(df['value'].iloc[i])
+        
+        if df.key[i][1] == 'cured':
+            cured.append(df['value'].iloc[i])
+    
+        if df.key[i][1] == 'death':
+            deaths.append(df['value'].iloc[i]) 
+            
+        if df.key[i][1] == 'total_confirmed_cases':
+            total.append(df['value'].iloc[i])
+        
+    data = pd.DataFrame({'date': date, 'active_cases': active_cases, 'cured': cured, 'deaths': deaths, 'total': total})
+    data['date'] = pd.to_datetime(data['date'])
+    
+    # Cleanup
+    
+    for i in range(len(data)-2):
+        if data['cured'].iloc[i+1]<data['cured'].iloc[i]:
+            data['cured'].iloc[i+1] = (data['cured'].iloc[i]+data['cured'].iloc[i+2])/2
+        if data['deaths'].iloc[i+1]<data['deaths'].iloc[i]:
+            data['deaths'].iloc[i+1] = (data['deaths'].iloc[i]+data['deaths'].iloc[i+2])/2
+        if data['total'].iloc[i+1]<data['total'].iloc[i]:
+            data['total'].iloc[i+1] = (data['total'].iloc[i]+data['total'].iloc[i+2])/2
+
+    # Missing Dates
+    data = data.groupby(pd.Grouper(key='date',freq='D')).max().rename_axis('date').reset_index()
+    
+    for i in range(len(data)):
+        if np.isnan(data['active_cases'].iloc[i]):
+            data['active_cases'].iloc[i] = data['active_cases'][i-1]
+            data['cured'].iloc[i] = data['cured'][i-1]
+            data['deaths'].iloc[i] = data['deaths'][i-1]
+            data['total'].iloc[i] = data['total'][i-1]        
+       
+    total = data['total'].tolist()
+    deaths = data['deaths'].tolist()
+    recovered = data['cured'].tolist()
+    
+
+
 #    popData2019 = 1366417756
     popData2019 = 1380004385
     cdata = pd.DataFrame([total,deaths,recovered]).transpose()
