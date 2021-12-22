@@ -57,7 +57,7 @@ def load_data():
     
     url = 'https://api.covid19tracker.in/data/csv/latest/states.csv'
     data = pd.read_csv(url)
-    data = data[data["State"]=="India"]
+    data = data[data["state"]=="India"]
     data["Date"] = pd.to_datetime(data['Date'])
     
     r = pd.date_range(start=data.Date.min(), end=data.Date.max())
@@ -65,11 +65,11 @@ def load_data():
     
     
     for row in range(len(data)):
-        if data['State'][row] == 0.0:
+        if data['state'][row] == 0.0:
             data['Confirmed'].iloc[row] = data['Confirmed'].iloc[row-1]
             data['Recovered'].iloc[row] = data['Recovered'].iloc[row-1]
             data['Deceased'].iloc[row] = data['Deceased'].iloc[row-1]
-            data['State'].iloc[row] = 'India'
+            data['state'].iloc[row] = 'India'
     
     total = data['Confirmed'].tolist()
     deaths = data['Deceased'].tolist()
