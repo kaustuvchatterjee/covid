@@ -55,7 +55,7 @@ def load_data():
     # deaths = data['Total Deceased'].tolist()
     # recovered = data['Total Recovered'].tolist()    
     
-    url = 'https://data.covid19india.org/csv/latest/states.csv'
+    url = 'https://api.covid19tracker.in/data/csv/latest/states.csv'
     data = pd.read_csv(url)
     data = data[data["State"]=="India"]
     data["Date"] = pd.to_datetime(data['Date'])
