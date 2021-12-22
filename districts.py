@@ -20,7 +20,7 @@ def load_data():
     url = 'https://api.covid19tracker.in/data/csv/latest/districts.csv'
     data = pd.read_csv(url)
     cdata = data
-    cdata = cdata.drop(columns=["Other","Tested"])
+#     cdata = cdata.drop(columns=["Other","Tested"])
     idx = cdata[(cdata["District"]=="Unknown") | (cdata["District"]=="Others") | 
                 (cdata["District"]=="State Pool") |
                (cdata["District"]=="Foreign Evacuees") |
