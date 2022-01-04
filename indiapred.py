@@ -58,9 +58,9 @@ def load_inddata():
     #################
     url = 'https://api.covid19tracker.in/data/csv/latest/case_time_series.csv'
     data = pd.read_csv(url)
-    total = data['Total Confirmed'].tolist()
-    deaths = data['Total Deceased'].tolist()
-    recovered = data['Total Recovered'].tolist()
+    total = data['Total Confirmed'].tolist()[5:]
+    deaths = data['Total Deceased'].tolist()[5:]
+    recovered = data['Total Recovered'].tolist()[5:]
     #################
     
     # url = 'https://data.covid19india.org/csv/latest/states.csv'
@@ -205,7 +205,7 @@ def india_pred():
     df['Infectious Pd']=1/df['gamma']
     df['date_id']=df['date_id'].astype(int)
     # startdate = pd.Timestamp('2020-01-22')
-    startdate = pd.Timestamp('2020-01-30')
+    startdate = pd.Timestamp('2020-03-03')
     df['time_added'] = pd.to_timedelta(df['date_id'],'d')
     df['Date'] = startdate+df['time_added']
     df.drop(['time_added'],axis='columns', inplace=True)
@@ -288,7 +288,7 @@ def india_pred():
     S,I,R = ret.T
     
     # startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
-    startdate = datetime.strptime('2020-01-31','%Y-%m-%d')
+    startdate = datetime.strptime('2020-03-03','%Y-%m-%d')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
