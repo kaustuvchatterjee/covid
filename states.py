@@ -15,7 +15,7 @@ import streamlit as st
 # Read data from covid19india website
 @st.cache(allow_output_mutation=True)
 def load_data():
-    url = 'https://api.covid19india.org/csv/latest/state_wise_daily.csv'
+    url = 'https://api.covid19tracker.in/csv/latest/state_wise_daily.csv'
     data = pd.read_csv(url)
     return data
 
