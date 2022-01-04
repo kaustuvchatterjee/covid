@@ -56,11 +56,11 @@ def load_inddata():
     # recovered=india_df.values.tolist()[0]
     
     #################
-    # url = 'https://data.covid19india.org/csv/latest/case_time_series.csv'
-    # data = pd.read_csv(url)
-    # total = data['Total Confirmed'].tolist()
-    # deaths = data['Total Deceased'].tolist()
-    # recovered = data['Total Recovered'].tolist()
+    url = 'https://api.covid19tracker.in/data/csv/latest/case_time_series.csv'
+    data = pd.read_csv(url)
+    total = data['Total Confirmed'].tolist()
+    deaths = data['Total Deceased'].tolist()
+    recovered = data['Total Recovered'].tolist()
     #################
     
     # url = 'https://data.covid19india.org/csv/latest/states.csv'
@@ -80,57 +80,57 @@ def load_inddata():
     #         data['State'].iloc[row] = 'India'
    
     
-    url = 'https://raw.githubusercontent.com/datameet/covid19/master/data/all_totals.json'
-    data = pd.read_json(url)
-    df = pd.json_normalize(data.rows)
+    # url = 'https://raw.githubusercontent.com/datameet/covid19/master/data/all_totals.json'
+    # data = pd.read_json(url)
+    # df = pd.json_normalize(data.rows)
     
-    date = []
-    active_cases = []
-    cured = []
-    deaths = []
-    total = []
+    # date = []
+    # active_cases = []
+    # cured = []
+    # deaths = []
+    # total = []
     
     
-    for i in range(len(df)):
-        if df.key[i][1] == 'active_cases':
-            date.append(df.key[i][0])
-            active_cases.append(df['value'].iloc[i])
+    # for i in range(len(df)):
+    #     if df.key[i][1] == 'active_cases':
+    #         date.append(df.key[i][0])
+    #         active_cases.append(df['value'].iloc[i])
         
-        if df.key[i][1] == 'cured':
-            cured.append(df['value'].iloc[i])
+    #     if df.key[i][1] == 'cured':
+    #         cured.append(df['value'].iloc[i])
     
-        if df.key[i][1] == 'death':
-            deaths.append(df['value'].iloc[i]) 
+    #     if df.key[i][1] == 'death':
+    #         deaths.append(df['value'].iloc[i]) 
             
-        if df.key[i][1] == 'total_confirmed_cases':
-            total.append(df['value'].iloc[i])
+    #     if df.key[i][1] == 'total_confirmed_cases':
+    #         total.append(df['value'].iloc[i])
         
-    data = pd.DataFrame({'date': date, 'active_cases': active_cases, 'cured': cured, 'deaths': deaths, 'total': total})
-    data['date'] = pd.to_datetime(data['date'])
+    # data = pd.DataFrame({'date': date, 'active_cases': active_cases, 'cured': cured, 'deaths': deaths, 'total': total})
+    # data['date'] = pd.to_datetime(data['date'])
     
-    # Cleanup
+    # # Cleanup
     
-    for i in range(len(data)-2):
-        if data['cured'].iloc[i+1]<data['cured'].iloc[i]:
-            data['cured'].iloc[i+1] = (data['cured'].iloc[i]+data['cured'].iloc[i+2])/2
-        if data['deaths'].iloc[i+1]<data['deaths'].iloc[i]:
-            data['deaths'].iloc[i+1] = (data['deaths'].iloc[i]+data['deaths'].iloc[i+2])/2
-        if data['total'].iloc[i+1]<data['total'].iloc[i]:
-            data['total'].iloc[i+1] = (data['total'].iloc[i]+data['total'].iloc[i+2])/2
+    # for i in range(len(data)-2):
+    #     if data['cured'].iloc[i+1]<data['cured'].iloc[i]:
+    #         data['cured'].iloc[i+1] = (data['cured'].iloc[i]+data['cured'].iloc[i+2])/2
+    #     if data['deaths'].iloc[i+1]<data['deaths'].iloc[i]:
+    #         data['deaths'].iloc[i+1] = (data['deaths'].iloc[i]+data['deaths'].iloc[i+2])/2
+    #     if data['total'].iloc[i+1]<data['total'].iloc[i]:
+    #         data['total'].iloc[i+1] = (data['total'].iloc[i]+data['total'].iloc[i+2])/2
 
-    # Missing Dates
-    data = data.groupby(pd.Grouper(key='date',freq='D')).max().rename_axis('date').reset_index()
+    # # Missing Dates
+    # data = data.groupby(pd.Grouper(key='date',freq='D')).max().rename_axis('date').reset_index()
     
-    for i in range(len(data)):
-        if np.isnan(data['active_cases'].iloc[i]):
-            data['active_cases'].iloc[i] = data['active_cases'][i-1]
-            data['cured'].iloc[i] = data['cured'][i-1]
-            data['deaths'].iloc[i] = data['deaths'][i-1]
-            data['total'].iloc[i] = data['total'][i-1]        
+    # for i in range(len(data)):
+    #     if np.isnan(data['active_cases'].iloc[i]):
+    #         data['active_cases'].iloc[i] = data['active_cases'][i-1]
+    #         data['cured'].iloc[i] = data['cured'][i-1]
+    #         data['deaths'].iloc[i] = data['deaths'][i-1]
+    #         data['total'].iloc[i] = data['total'][i-1]        
        
-    total = data['total'].tolist()
-    deaths = data['deaths'].tolist()
-    recovered = data['cured'].tolist()
+    # total = data['total'].tolist()
+    # deaths = data['deaths'].tolist()
+    # recovered = data['cured'].tolist()
     
     return total,deaths,recovered
 
