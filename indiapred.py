@@ -288,7 +288,7 @@ def india_pred():
     S,I,R = ret.T
     
     # startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
-    startdate = datetime.strptime('2020-03-03','%Y-%m-%d')
+    startdate = datetime.strptime('2020-03-04','%Y-%m-%d')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
