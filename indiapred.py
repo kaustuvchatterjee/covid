@@ -193,6 +193,7 @@ def india_pred():
     
         g=[]
         for i in range(start, end-1):
+            print(II[i])
             if II[i]==0.0:
                 oo = 0.0
             else:
