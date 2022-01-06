@@ -147,14 +147,14 @@ def load_inddata():
     # deaths = data['deaths'].tolist()
     # recovered = data['cured'].tolist()
     
-    return total,deaths,recovered
+    return total,deaths,recovered,startdate
 
 
 # total,deaths,recovered, startdate = load_inddata()
 
 
 def india_pred():
-    total,deaths,recovered, startdate = load_inddata()
+    total,deaths,recovered,startdate = load_inddata()
     
     # Check for zero at last record
     if (total[-1]-total[-2] <= 0) | (deaths[-1]-deaths[-2] <= 0) | (recovered[-1]-recovered[-2] <= 0):
@@ -224,7 +224,7 @@ def india_pred():
     df['Infectious Pd']=1/df['gamma']
     df['date_id']=df['date_id'].astype(int)
     # startdate = pd.Timestamp('2020-01-22')
-    startdate = pd.Timestamp('2020-03-03')
+    # startdate = pd.Timestamp('2020-03-03')
     df['time_added'] = pd.to_timedelta(df['date_id'],'d')
     df['Date'] = startdate+df['time_added']
     df.drop(['time_added'],axis='columns', inplace=True)
@@ -236,6 +236,7 @@ def india_pred():
     df =df.drop(index=idx)
     # df.drop(df[df['Rt'] > 2.65].index, inplace = True) 
     df.reset_index(drop=True, inplace=True)
+    df['Date']=df['Date']+np.timedelta64(6,'D')
     # df.head()
     
    
@@ -312,7 +313,8 @@ def india_pred():
     S,I,R = ret.T
     
     # startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
-    startdate = datetime.strptime('2020-03-04','%Y-%m-%d')
+    # startdate = datetime.strptime('2020-03-04','%Y-%m-%d')
+    startdate = startdate+np.timedelta64(1,'D')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
@@ -346,6 +348,11 @@ def india_pred():
     rt = np.array(df['Rt'])
     max_rt_idx = find_peaks(rt, distance=3,height=1.5)
     max_rt_idx = max_rt_idx[0][-1]
+    if rt[-1]<rt[max_rt_idx]:
+        max_rt_idx = max_rt_idx
+    else:
+        max_rt_idx = len(rt)-1
+        
     max_rt_date = df['Date'].iloc[max_rt_idx]
     max_rt = rt[max_rt_idx]
     A = [x+y for x, y in zip(II[1:], RR[1:])]
