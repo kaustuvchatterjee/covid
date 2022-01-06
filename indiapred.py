@@ -58,9 +58,24 @@ def load_inddata():
     #################
     url = 'https://api.covid19tracker.in/data/csv/latest/case_time_series.csv'
     data = pd.read_csv(url)
-    total = data['Total Confirmed'].tolist()[5:]
-    deaths = data['Total Deceased'].tolist()[5:]
-    recovered = data['Total Recovered'].tolist()[5:]
+    
+    drop_cols = ['Date_YMD','Daily Confirmed','Daily Recovered','Daily Deceased']
+    data = data.drop(drop_cols,axis=1)
+    data['Date'] = pd.to_datetime(data['Date'])
+    
+     # Missing Dates
+    data = data.groupby(pd.Grouper(key='Date',freq='D')).max().rename_axis('Date').reset_index()
+    for i in range(len(data)):
+        if np.isnan(data['Total Confirmed'].iloc[i]):
+            data['Total Confirmed'].iloc[i] = data['Total Confirmed'].iloc[i-1]
+            data['Total Recovered'].iloc[i] = data['Total Recovered'].iloc[i-1]
+            data['Total Deceased'].iloc[i] = data['Total Deceased'].iloc[i-1]    
+
+    
+    total = data['Total Confirmed'].tolist()
+    deaths = data['Total Deceased'].tolist()
+    recovered = data['Total Recovered'].tolist()
+    startdate = data['Date'].iloc[0]
     #################
     
     # url = 'https://data.covid19india.org/csv/latest/states.csv'
@@ -209,6 +224,8 @@ def india_pred():
     df['time_added'] = pd.to_timedelta(df['date_id'],'d')
     df['Date'] = startdate+df['time_added']
     df.drop(['time_added'],axis='columns', inplace=True)
+    df = df[df['Date']>='2020-04-01']
+    df.reset_index(drop=True, inplace=True)
     # df =df.drop([0,1,2,3])
     idx = df[df['Rt']<2.65].index[0]
     idx = np.arange(0,idx).tolist()
