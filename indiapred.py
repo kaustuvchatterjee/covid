@@ -155,14 +155,14 @@ def india_pred():
     s = 35
     
     # while s<=49:
-    while s<=41:
-        if (l-s)%7 == 0:
-            start = s
-            break
-        s+=1
+    # while s<=41:
+    #     if (l-s)%7 == 0:
+    #         start = s
+    #         break
+    #     s+=1
     
     window = 7
-    # start = 43
+    start = 0
     end = start+window
     
     idx = []
@@ -210,8 +210,11 @@ def india_pred():
     df['Date'] = startdate+df['time_added']
     df.drop(['time_added'],axis='columns', inplace=True)
     # df =df.drop([0,1,2,3])
-    df.drop(df[df['Rt'] > 2.65].index, inplace = True) 
-    df.reset_index(drop=True)
+    idx = df[df['Rt']<2.65].index[0]
+    idx = np.arange(0,idx).tolist()
+    df =df.drop(index=idx)
+    # df.drop(df[df['Rt'] > 2.65].index, inplace = True) 
+    df.reset_index(drop=True, inplace=True)
     # df.head()
     
    
