@@ -150,11 +150,11 @@ def load_inddata():
     return total,deaths,recovered
 
 
-total,deaths,recovered = load_inddata()
+# total,deaths,recovered, startdate = load_inddata()
 
 
 def india_pred():
-    total,deaths,recovered = load_inddata()
+    total,deaths,recovered, startdate = load_inddata()
     
     # Check for zero at last record
     if (total[-1]-total[-2] <= 0) | (deaths[-1]-deaths[-2] <= 0) | (recovered[-1]-recovered[-2] <= 0):
@@ -193,7 +193,10 @@ def india_pred():
     
         g=[]
         for i in range(start, end-1):
-            oo=((RR[i+1]-RR[i])/II[i])
+            if II[i]==0.0:
+                oo = 0.0
+            else:
+                oo=((RR[i+1]-RR[i])/II[i])
             g.append(oo)
         
         gamma=np.mean(g)
@@ -206,7 +209,7 @@ def india_pred():
         blist.append(beta)
         rtlist.append(R0)
         
-        start = end
+        start = start+1
         end = start+window
         
     #idx = np.array(idx[::-1])
