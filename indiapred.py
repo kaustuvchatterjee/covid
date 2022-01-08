@@ -245,6 +245,7 @@ def india_pred():
     N = 1387e6 #Total Population
     
     timestops = df['date_id'].values.tolist()
+    timestops = timestops[::window]
     tdate = []
     Imod = []
     Smod = []
