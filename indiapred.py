@@ -281,10 +281,10 @@ def india_pred():
     
     ## Prediction
     #Initial Conditions
-    I0 = II[-2]
-    R0 = RR[-2]
+    I0 = II[-9]
+    R0 = RR[-9]
     # S0 = N-I0-R0
-    S0 = N-total[-1]
+    S0 = N-total[-8]
     days = 180
     t = np.linspace(tlist[-1],tlist[-1]+days-1,days)
     # Initial coditions vector
@@ -314,7 +314,7 @@ def india_pred():
     
     # startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
     # startdate = datetime.strptime('2020-03-04','%Y-%m-%d')
-    startdate = startdate+np.timedelta64(1,'D')
+    startdate = startdate+np.timedelta64(-7,'D')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
