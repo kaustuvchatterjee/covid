@@ -314,7 +314,7 @@ def india_pred():
     
     # startdate = datetime.strptime('2020-01-23','%Y-%m-%d')
     # startdate = datetime.strptime('2020-03-04','%Y-%m-%d')
-    startdate = startdate+np.timedelta64(1,'D')
+    startdate = startdate+np.timedelta64(2,'D')
     n = len(total)
     trange = np.arange(0,n-1).tolist()
     #trange
