@@ -177,7 +177,7 @@ def india_pred():
     #     s+=1
     
     window = 7
-    start = 0
+    start = l%window
     end = start+window
     
     idx = []
@@ -209,7 +209,7 @@ def india_pred():
         blist.append(beta)
         rtlist.append(R0)
         
-        start = start+1
+        start = start+7
         end = start+window
         
     #idx = np.array(idx[::-1])
@@ -245,7 +245,6 @@ def india_pred():
     N = 1387e6 #Total Population
     
     timestops = df['date_id'].values.tolist()
-    timestops = timestops[::window]
     tdate = []
     Imod = []
     Smod = []
@@ -281,8 +280,8 @@ def india_pred():
     
     ## Prediction
     #Initial Conditions
-    I0 = II[-2]
-    R0 = RR[-2]
+    I0 = II[-1]
+    R0 = RR[-1]
     # S0 = N-I0-R0
     S0 = N-total[-1]
     days = 180
@@ -331,7 +330,7 @@ def india_pred():
         td.append(startdate+timedelta(i))
         
     for i in trange:
-        ta.append(startdate+timedelta(i))
+        ta.append(startdate+timedelta(i+1))
     
     
     Total_cases_mod = list(map(lambda x : N-x, Slist))
