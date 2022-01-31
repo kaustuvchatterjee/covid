@@ -13,12 +13,14 @@ def load_data():
     # url = 'https://data.covid19india.org/csv/latest/districts.csv'
     url = 'https://api.covid19tracker.in/data/csv/latest/districts.csv'
     data = pd.read_csv(url)
+    data['Date'] = pd.to_datetime(data['Date'])
     return data
 
 data = load_data()
 
 
 cdata = data[data['District']=='Mumbai']
+cdata.sort_values(by=['Date'],inplace=True)
 cdata['Daily Cases']=cdata['Confirmed'].diff()
 cdata = cdata[1:]
 
