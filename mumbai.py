@@ -18,7 +18,6 @@ def load_data():
 
 data = load_data()
 
-
 cdata = data[data['District']=='Mumbai']
 cdata.sort_values(by=['Date'],inplace=True)
 cdata['Daily Cases']=cdata['Confirmed'].diff()
