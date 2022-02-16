@@ -11,6 +11,7 @@ from scipy.signal import savgol_filter
 
 
 def load_data():
+
     # url = 'https://data.covid19india.org/csv/latest/districts.csv'
     url = 'https://api.covid19tracker.in/data/csv/latest/districts.csv'
     data = pd.read_csv(url)
