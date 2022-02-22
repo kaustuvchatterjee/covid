@@ -9,7 +9,6 @@ import numpy as np
 import plotly.graph_objects as go
 from scipy.signal import savgol_filter
 
-
 def load_data():
 
     # url = 'https://data.covid19india.org/csv/latest/districts.csv'
@@ -17,6 +16,7 @@ def load_data():
     data = pd.read_csv(url)
     data['Date'] = pd.to_datetime(data['Date'])
     return data
+
 
 data = load_data()
 
