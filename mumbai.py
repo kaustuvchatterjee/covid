@@ -17,7 +17,6 @@ def load_data():
     data['Date'] = pd.to_datetime(data['Date'])
     return data
 
-
 data = load_data()
 
 cdata = data[data['District']=='Mumbai']
